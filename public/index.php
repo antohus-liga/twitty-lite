@@ -1,0 +1,37 @@
+<?php
+
+session_start();
+
+require_once '../vendor/autoload.php';
+
+use Core\Database;
+use Core\Router;
+use App\Repositories\UserRepository;
+use App\Repositories\PostRepository;
+use App\Services\AuthService;
+use App\Services\PostService;
+use App\Controllers\AuthController;
+use App\Controllers\PostController;
+
+$userRepository = new UserRepository(Database::getInstance());
+$postRepository = new PostRepository(Database::getInstance());
+
+$authService = new AuthService($userRepository);
+$postService = new PostService($postRepository);
+
+$authController = new AuthController($authService);
+$postController = new PostController($postService);
+
+$router = new Router();
+$router->add('POST', '/api/register', [$authController, 'register']);
+$router->add('POST', '/api/login', [$authController, 'login']);
+$router->add('GET', '/api/posts', [$postController, 'index']);
+$router->add('POST', '/api/posts', [$postController, 'store'], true);
+
+$method = $_SERVER['REQUEST_METHOD'];
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+$basePath = '/twitty-lite/public';
+$path = str_replace($basePath, '', $path);
+
+$router->dispatch($method, $path);
