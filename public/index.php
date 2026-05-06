@@ -31,7 +31,4 @@ $router->add('POST', '/api/posts', [$postController, 'store'], true);
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$basePath = '/twitty-lite/public';
-$path = str_replace($basePath, '', $path);
-
 $router->dispatch($method, $path);
