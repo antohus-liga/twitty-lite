@@ -1,0 +1,12 @@
+{
+    "name": "ima/twitty-lite",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Core\\": "core/"
+        }
+    },
+    "require": {
+      "ext-pdo": "*"
+    }
+}
