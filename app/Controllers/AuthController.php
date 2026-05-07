@@ -47,4 +47,26 @@ class AuthController {
         http_response_code(200);
         echo json_encode(['message' => 'User logged in']);
     }
+
+    public function logout(): void {
+        unset($_SESSION['user_id']);
+        session_destroy();
+        http_response_code(200);
+    }
+
+    public function me(): void {
+        $currentUser = $this->authService->getCurrentUser($_SESSION['user_id']);
+        if (!$currentUser) {
+            http_response_code(401);
+            echo json_encode(['error' => 'User not found']);
+            return;
+        }
+
+        http_response_code(200);
+        echo json_encode([
+            'id' => $currentUser->id,
+            'username' => $currentUser->username,
+            'created_at' => $currentUser->createdAt,
+        ]);
+    }
 }

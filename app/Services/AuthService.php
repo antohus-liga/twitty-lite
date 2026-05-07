@@ -12,6 +12,10 @@ class AuthService {
         $this->userRepository = $userRepository;
     }
 
+    public function getCurrentUser(int $id): ?User {
+        return $this->userRepository->findById($id);
+    }
+
     public function register(string $username, string $password): void {
         if (empty($username) || empty($password)) {
             throw new \InvalidArgumentException('Username and password cannot be empty');
