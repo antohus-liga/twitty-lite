@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use core\Database;
 use PDO;
 use App\Models\Post;
 
