@@ -9,7 +9,7 @@ async function load() {
 
 document.addEventListener('click', async(e) => {
     if (e.target.classList.contains('like-btn')) {
-        if (e.target.contains('liked')) {
+        if (e.target.classList.contains('liked')) {
             e.target.classList.remove('liked')
         } else {
             e.target.classList.add('liked')
