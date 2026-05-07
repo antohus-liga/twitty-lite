@@ -9,6 +9,11 @@ async function load() {
 
 document.addEventListener('click', async(e) => {
     if (e.target.classList.contains('like-btn')) {
+        if (e.target.contains('liked')) {
+            e.target.classList.remove('liked')
+        } else {
+            e.target.classList.add('liked')
+        }
         const postId = e.target.dataset.id;
         await likePost(postId);
         load();
