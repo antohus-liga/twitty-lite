@@ -16,7 +16,9 @@ class Router {
 
     public function dispatch(string $method, string $path): void {
         foreach ($this->routes as $route) {
-            if ($route['method'] === $method && $route['path'] === $path) {
+            $pattern = '#^' . preg_replace('/\{(\w+)}/', '(\d+)', $route['path']) . '$#';
+
+            if ($route['method'] === $method && preg_match($pattern, $path, $matches)) {
                 if ($route['protected']) {
                     if (!isset($_SESSION['user_id'])) {
                         http_response_code(401);
@@ -24,8 +26,9 @@ class Router {
                         return;
                     }
                 }
+                array_shift($matches);
                 [$controller, $methodName] = $route['action'];
-                $controller->$methodName();
+                $controller->$methodName(...$matches);
                 return;
             }
         }
