@@ -1,9 +1,9 @@
 export function postTemplate(post) {
     return `
         <div class="post" data-id="${post.id}">
-            <p class="post-author">@${post.userId}</p>
-            <p class="post-content">@${post.content}</p>
-            <button class="like-btn" data-id="${post.id}">Like</button>
+            <p class="post-author">@${post.username}</p>
+            <p class="post-content">${post.content}</p>
+            <button class="like-btn" data-id="${post.id}">❤️ ${post.likeCount}</button>
         </div>
     `;
 }

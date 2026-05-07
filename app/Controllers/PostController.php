@@ -21,7 +21,9 @@ class PostController {
                 'id' => $post->id,
                 'userId' => $post->userId,
                 'content' => $post->content,
-                'createdAt' => $post->createdAt
+                'createdAt' => $post->createdAt,
+                'username' => $post->username,
+                'likeCount' => $post->likeCount,
             ], $posts)
         );
     }

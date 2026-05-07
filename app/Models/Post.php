@@ -8,5 +8,7 @@ class Post {
         public int $userId,
         public string $content,
         public string $createdAt,
+        public string $username,
+        public int $likeCount,
     ) {}
 }

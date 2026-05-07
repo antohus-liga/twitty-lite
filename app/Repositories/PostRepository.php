@@ -13,14 +13,22 @@ class PostRepository {
     }
 
     public function getAll(): array {
-        $stmt = $this->db->query("SELECT * FROM posts");
+        $stmt = $this->db->query("
+            SELECT posts.*, users.username, COUNT(likes.id) as like_count
+            FROM posts
+            JOIN users ON posts.user_id = users.id
+            LEFT JOIN likes ON posts.id = likes.post_id
+            GROUP BY posts.id
+        ");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map(fn($row) => new Post(
             $row['id'],
             $row['user_id'],
             $row['content'],
-            $row['created_at']
+            $row['created_at'],
+            $row['username'],
+            (int) $row['like_count'],
         ), $rows);
     }
 
