@@ -7,6 +7,7 @@ require_once '../vendor/autoload.php';
 use App\Controllers\LikeController;
 use App\Repositories\LikeRepository;
 use App\Services\LikeService;
+use App\Services\UserService;
 use Core\Database;
 use Core\Router;
 use App\Repositories\UserRepository;
@@ -20,7 +21,8 @@ $userRepository = new UserRepository(Database::getInstance());
 $postRepository = new PostRepository(Database::getInstance());
 $likeRepository = new LikeRepository(Database::getInstance());
 
-$authService = new AuthService($userRepository);
+$userService = new UserService($userRepository);
+$authService = new AuthService($userService);
 $postService = new PostService($postRepository);
 $likeService = new LikeService($likeRepository);
 

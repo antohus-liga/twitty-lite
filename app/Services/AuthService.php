@@ -3,17 +3,16 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Repositories\UserRepository;
 
 class AuthService {
-    private UserRepository $userRepository;
+    private UserService $userService;
 
-    public function __construct(UserRepository $userRepository) {
-        $this->userRepository = $userRepository;
+    public function __construct(UserService $userService) {
+        $this->userService = $userService;
     }
 
     public function getCurrentUser(int $id): ?User {
-        return $this->userRepository->findById($id);
+        return $this->userService->findById($id);
     }
 
     public function register(string $username, string $password): void {
@@ -25,12 +24,12 @@ class AuthService {
             throw new \InvalidArgumentException('Username cannot exceed 50 characters');
         }
 
-        if ($this->userRepository->findByUsername($username)) {
+        if ($this->userService->findByUsername($username)) {
             throw new \InvalidArgumentException("Username $username is taken");
         }
 
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $this->userRepository->create($username, $hashedPassword);
+        $this->userService->create($username, $hashedPassword);
     }
 
     public function login(string $username, string $password): ?User {
@@ -38,7 +37,7 @@ class AuthService {
             throw new \InvalidArgumentException('Username and password cannot be empty');
         }
 
-        $user = $this->userRepository->findByUsername($username);
+        $user = $this->userService->findByUsername($username);
         if (!$user) {
             return null;
         }
