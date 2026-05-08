@@ -16,7 +16,11 @@ class Router {
 
     public function dispatch(string $method, string $path): void {
         foreach ($this->routes as $route) {
-            $pattern = '#^' . preg_replace('/\{(\w+)}/', '(\d+)', $route['path']) . '$#';
+            $pattern = '#^' . preg_replace(
+                    ['/\{id}/', '/\{(\w+)}/'],
+                    ['(\d+)', '([\w]+)'],
+                    $route['path']
+                ) . '$#';
 
             if ($route['method'] === $method && preg_match($pattern, $path, $matches)) {
                 if ($route['protected']) {

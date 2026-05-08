@@ -2,35 +2,37 @@ import {loginView} from "./views/login.js";
 import {registerView} from "./views/register.js";
 import {feedView} from "./views/feed.js";
 import {renderNavbar, setupNavbar} from "./components/navbar.js";
+import {profileView} from "./views/profile.js";
+import {me} from "./api/auth.js";
 
-const routes = {
-    '/': loginView,
-    '/feed': feedView,
-    '/login': loginView,
-    '/register': registerView,
-};
+const routes = [
+    { path: /^\/$/, view: loginView },
+    { path: /^\/login$/, view: loginView },
+    { path: /^\/register$/, view: registerView },
+    { path: /^\/feed$/, view: feedView },
+    { path: /^\/profile\/(\w+)$/, view: profileView },
+];
 
 const publicRoutes = ['/login', '/register', '/'];
 
-export function navigate(path) {
-    history.pushState({}, '', path);
-    render();
-}
-
-export function render() {
+export async function render() {
     const path = window.location.pathname;
-    const view = routes[path];
+    const isPublic = publicRoutes.includes(path);
 
-    if (!publicRoutes.includes(path)) {
-        document.getElementById('navbar').innerHTML = renderNavbar();
+    if (!isPublic) {
+        const user = await me();
+        document.getElementById('navbar').innerHTML = isPublic ? '' : renderNavbar(user.username);
         setupNavbar();
-    } else {
-        document.getElementById('navbar').innerHTML = '';
     }
 
-    if (view) {
-        view();
-    } else {
-        document.getElementById('app').innerHTML = '<p>404 - Page not found</p>';
+    for (const route of routes) {
+        const match = path.match(route.path);
+        if (match) {
+            const params = match.slice(1);
+            route.view(...params);
+            return;
+        }
     }
+
+    document.getElementById('app').innerHTML = '<p>404 - Page not found</p>';
 }

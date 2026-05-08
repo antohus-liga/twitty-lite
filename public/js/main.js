@@ -1,5 +1,6 @@
 import {me} from "./api/auth.js";
-import {navigate, render} from "./router.js";
+import {render} from "./router.js";
+import {navigate} from "./navigate.js";
 
 dayjs.extend(dayjs_plugin_relativeTime);
 
@@ -9,7 +10,7 @@ async function init() {
     if(user.error) {
         navigate('/login');
     } else {
-        navigate('/feed');
+        await render();
     }
 }
 

@@ -1,5 +1,5 @@
 import {register} from "../api/auth.js";
-import {navigate} from "../router.js";
+import {navigate} from "../navigate.js";
 
 export async function registerView() {
     document.getElementById('app').innerHTML = `

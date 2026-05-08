@@ -15,6 +15,10 @@ class PostService {
         return $this->postRepository->getAll();
     }
 
+    public function getByUserId(int $userId): array {
+        return $this->postRepository->getByUserId($userId);
+    }
+
     public function create(int $userId, string $content): void {
         if (empty($content)) {
             throw new \InvalidArgumentException('Content cannot be empty');

@@ -1,5 +1,6 @@
 import {postTemplate} from "../components/post.js";
 import {createPost, getPosts, likePost} from "../api/posts.js";
+import {navigate} from "../navigate.js";
 
 export async function feedView() {
     const posts = await getPosts();
@@ -14,6 +15,11 @@ export async function feedView() {
     `;
 
     document.getElementById('feed').addEventListener('click', async(e) => {
+        if (e.target.classList.contains('post-author')) {
+            e.preventDefault();
+            const username = e.target.getAttribute('href').split('/').pop();
+            navigate(`/profile/${username}`);
+        }
         if (e.target.classList.contains('like-btn')) {
             const postId = e.target.dataset.id;
             await likePost(postId);

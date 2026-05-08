@@ -5,6 +5,7 @@ session_start();
 require_once '../vendor/autoload.php';
 
 use App\Controllers\LikeController;
+use App\Controllers\UserController;
 use App\Repositories\LikeRepository;
 use App\Services\LikeService;
 use App\Services\UserService;
@@ -29,6 +30,7 @@ $likeService = new LikeService($likeRepository);
 $authController = new AuthController($authService);
 $postController = new PostController($postService);
 $likeController = new LikeController($likeService);
+$userController = new UserController($postService, $userService);
 
 $router = new Router();
 $router->add('POST', '/api/register', [$authController, 'register']);
@@ -38,6 +40,7 @@ $router->add('POST', '/api/posts', [$postController, 'store'], true);
 $router->add('POST', '/api/posts/{id}/like', [$likeController, 'toggle'], true);
 $router->add('GET', '/api/me', [$authController, 'me'], true);
 $router->add('POST', '/api/logout', [$authController, 'logout'], true);
+$router->add('GET', '/api/users/{username}', [$userController, 'show']);
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
