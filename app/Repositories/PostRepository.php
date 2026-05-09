@@ -19,6 +19,7 @@ class PostRepository {
             JOIN users ON posts.user_id = users.id
             LEFT JOIN likes ON posts.id = likes.post_id
             GROUP BY posts.id
+            ORDER BY posts.created_at DESC
         ");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -40,6 +41,7 @@ class PostRepository {
             LEFT JOIN likes ON posts.id = likes.post_id
             WHERE posts.user_id = :userId
             GROUP BY posts.id
+            ORDER BY posts.created_at DESC
         ");
         $stmt->execute(['userId' => $userId]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
