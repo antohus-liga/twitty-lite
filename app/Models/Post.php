@@ -10,5 +10,6 @@ class Post {
         public string $createdAt,
         public string $username,
         public int $likeCount,
+        public int $commentCount,
     ) {}
 }

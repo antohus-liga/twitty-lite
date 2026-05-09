@@ -24,6 +24,7 @@ class PostController {
                 'createdAt' => $post->createdAt,
                 'username' => $post->username,
                 'likeCount' => $post->likeCount,
+                'commentCount' => $post->commentCount,
             ], $posts)
         );
     }
@@ -41,5 +42,26 @@ class PostController {
 
         http_response_code(201);
         echo json_encode(['message' => 'Post created']);
+    }
+
+    public function show(int $id): void {
+        $post = $this->postService->getById($id);
+        if (!$post) {
+            http_response_code(404);
+            echo json_encode(['error' => 'Post not found']);
+            return;
+        }
+
+        http_response_code(200);
+        header('Content-Type: application/json');
+        echo json_encode([
+            'id' => $post->id,
+            'userId' => $post->userId,
+            'content' => $post->content,
+            'createdAt' => $post->createdAt,
+            'username' => $post->username,
+            'likeCount' => $post->likeCount,
+            'commentCount' => $post->commentCount,
+        ]);
     }
 }

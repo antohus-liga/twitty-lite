@@ -41,14 +41,17 @@ $commentController = new CommentController($commentService);
 $router = new Router();
 $router->add('POST', '/api/register', [$authController, 'register']);
 $router->add('POST', '/api/login', [$authController, 'login']);
-$router->add('GET', '/api/posts', [$postController, 'index']);
-$router->add('POST', '/api/posts', [$postController, 'store'], true);
-$router->add('POST', '/api/posts/{id}/like', [$likeController, 'toggle'], true);
 $router->add('GET', '/api/me', [$authController, 'me'], true);
 $router->add('POST', '/api/logout', [$authController, 'logout'], true);
-$router->add('GET', '/api/users/{username}', [$userController, 'show']);
+
+$router->add('GET', '/api/posts', [$postController, 'index']);
+$router->add('POST', '/api/posts', [$postController, 'store'], true);
+$router->add('GET', '/api/posts/{id}', [$postController, 'show'], true);
+$router->add('POST', '/api/posts/{id}/like', [$likeController, 'toggle'], true);
 $router->add('GET', '/api/posts/{id}/comments', [$commentController, 'index']);
 $router->add('POST', '/api/posts/{id}/comments', [$commentController, 'store'], true);
+
+$router->add('GET', '/api/users/{username}', [$userController, 'show']);
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

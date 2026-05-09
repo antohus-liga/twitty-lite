@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Post;
 use App\Repositories\PostRepository;
 
 class PostService {
@@ -17,6 +18,10 @@ class PostService {
 
     public function getByUserId(int $userId): array {
         return $this->postRepository->getByUserId($userId);
+    }
+
+    public function getById(int $id): ?Post {
+        return $this->postRepository->getById($id);
     }
 
     public function create(int $userId, string $content): void {
