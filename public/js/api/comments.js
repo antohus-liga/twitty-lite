@@ -11,3 +11,10 @@ export async function createComment(postId, content) {
     })
     return await response.json();
 }
+
+export async function likeComment(commentId) {
+    const response = await fetch(`/api/comments/${commentId}/like`, {
+        method: 'POST'
+    });
+    return await response.json();
+}

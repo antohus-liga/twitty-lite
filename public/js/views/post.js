@@ -1,7 +1,7 @@
 import {postTemplate} from "../components/post.js";
 import {getPost, likePost} from "../api/posts.js";
 import {navigate} from "../navigate.js";
-import {createComment, getComments} from "../api/comments.js";
+import {createComment, getComments, likeComment} from "../api/comments.js";
 import {commentTemplate} from "../components/comment.js";
 
 export async function postView(postId) {
@@ -29,6 +29,11 @@ export async function postView(postId) {
         if (e.target.classList.contains('like-btn')) {
             const postId = e.target.dataset.id;
             await likePost(postId);
+            await postView(postId);
+        }
+        if (e.target.classList.contains('like-comment-btn')) {
+            const commentId = e.target.dataset.id;
+            await likeComment(commentId);
             await postView(postId);
         }
         if (e.target.classList.contains('submit-comment-btn')) {
