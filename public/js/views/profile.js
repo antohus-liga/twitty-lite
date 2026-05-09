@@ -20,6 +20,7 @@ export async function profileView(username) {
                 <div class="post">
                     <p class="post-content">${post.content}</p>
                     <span>❤️ ${post.likeCount}</span>
+                    <span>💬 ${post.commentCount}</span>
                 </div>
             `).join('')}
         </div>

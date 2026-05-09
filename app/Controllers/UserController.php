@@ -34,7 +34,8 @@ class UserController {
             'posts' => array_map(fn(Post $post) => [
                 'id' => $post->id,
                 'content' => $post->content,
-                'likeCount' => $post->likeCount
+                'likeCount' => $post->likeCount,
+                'commentCount' => $post->commentCount,
             ], $posts)
         ]);
     }
