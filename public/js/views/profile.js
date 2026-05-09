@@ -18,7 +18,7 @@ export async function profileView(username) {
         <div id="user-posts">
             ${data.posts.map(post => `
                 <div class="post">
-                    <p>${post.content}</p>
+                    <p class="post-content">${post.content}</p>
                     <span>❤️ ${post.likeCount}</span>
                 </div>
             `).join('')}
