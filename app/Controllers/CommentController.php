@@ -25,6 +25,7 @@ class CommentController {
             'content' => $comment->content,
             'createdAt' => $comment->createdAt,
             'username' => $comment->username,
+            'likeCount' => $comment->likeCount,
         ], $comments));
     }
 

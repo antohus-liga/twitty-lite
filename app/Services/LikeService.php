@@ -11,13 +11,13 @@ class LikeService {
         $this->likeRepository = $likeRepository;
     }
 
-    public function toggleLike(int $userId, int $postId): bool {
-        $like = $this->likeRepository->findLike($userId, $postId);
+    public function toggleLike(int $userId, int $targetId, string $type): bool {
+        $like = $this->likeRepository->findLike($userId, $targetId, $type);
         if ($like) {
-            $this->likeRepository->remove($like->userId, $like->postId);
+            $this->likeRepository->remove($like->userId, $like->targetId, $like->type);
             return false;
         } else {
-            $this->likeRepository->add($userId, $postId);
+            $this->likeRepository->add($userId, $targetId, $type);
             return true;
         }
     }

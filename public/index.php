@@ -47,9 +47,10 @@ $router->add('POST', '/api/logout', [$authController, 'logout'], true);
 $router->add('GET', '/api/posts', [$postController, 'index']);
 $router->add('POST', '/api/posts', [$postController, 'store'], true);
 $router->add('GET', '/api/posts/{id}', [$postController, 'show'], true);
-$router->add('POST', '/api/posts/{id}/like', [$likeController, 'toggle'], true);
 $router->add('GET', '/api/posts/{id}/comments', [$commentController, 'index']);
 $router->add('POST', '/api/posts/{id}/comments', [$commentController, 'store'], true);
+$router->add('POST', '/api/posts/{id}/like', [$likeController, 'toggleOnPost'], true);
+$router->add('POST', '/api/comments/{id}/like', [$likeController, 'toggleOnComment'], true);
 
 $router->add('GET', '/api/users/{username}', [$userController, 'show']);
 

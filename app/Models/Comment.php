@@ -10,5 +10,6 @@ class Comment {
         public string $content,
         public string $createdAt,
         public string $username,
+        public int $likeCount,
     ) {}
 }

@@ -16,7 +16,7 @@ class PostRepository {
         $stmt = $this->db->query("
             SELECT posts.*, 
                    users.username, 
-                   (SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id) as like_count,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post') as like_count,
                    (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count
             FROM posts
             JOIN users ON posts.user_id = users.id
@@ -40,7 +40,7 @@ class PostRepository {
         $stmt = $this->db->prepare("
             SELECT posts.*, 
                    users.username, 
-                   (SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id) as like_count,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post') as like_count,
                    (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count
             FROM posts
             JOIN users ON posts.user_id = users.id
@@ -67,7 +67,7 @@ class PostRepository {
         $stmt = $this->db->prepare("
             SELECT posts.*, 
                    users.username, 
-                   (SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id) as like_count,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post') as like_count,
                    (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count
             FROM posts
             JOIN users ON posts.user_id = users.id

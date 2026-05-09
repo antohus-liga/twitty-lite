@@ -14,7 +14,9 @@ class CommentRepository {
 
     public function findByPostId(int $postId): array {
         $stmt = $this->db->prepare("
-            SELECT comments.*, users.username 
+            SELECT comments.*, 
+                   users.username,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = comments.id AND likes.type = 'comment') as like_count
             FROM comments 
             JOIN users ON users.id = comments.user_id
             WHERE post_id = :postId 
@@ -31,6 +33,7 @@ class CommentRepository {
             $row['content'],
             $row['created_at'],
             $row['username'],
+            $row['like_count'],
         ), $rows);
     }
 
