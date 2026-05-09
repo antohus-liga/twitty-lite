@@ -25,6 +25,10 @@ export async function feedView() {
             await likePost(postId);
             await feedView();
         }
+        if (e.target.classList.contains('comment-btn')) {
+            const postId = e.target.dataset.id;
+            navigate(`/post/${postId}`)
+        }
     });
 
     document.getElementById('post-btn').addEventListener('click', async () => {

@@ -5,6 +5,7 @@ export function postTemplate(post) {
             <a href="/profile/${post.username}" class="post-author">@${post.username}</a>
             <p class="post-content">${post.content}</p>
             <button class="like-btn" data-id="${post.id}">❤️ ${post.likeCount}</button>
+            <button class="comment-btn" data-id="${post.id}">💬 ${post.commentCount}</button>
         </div>
     `;
 }

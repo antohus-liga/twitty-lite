@@ -4,6 +4,7 @@ import {feedView} from "./views/feed.js";
 import {renderNavbar, setupNavbar} from "./components/navbar.js";
 import {profileView} from "./views/profile.js";
 import {me} from "./api/auth.js";
+import {postView} from "./views/post.js";
 
 const routes = [
     { path: /^\/$/, view: loginView },
@@ -11,6 +12,7 @@ const routes = [
     { path: /^\/register$/, view: registerView },
     { path: /^\/feed$/, view: feedView },
     { path: /^\/profile\/(\w+)$/, view: profileView },
+    { path: /^\/post\/(\w+)$/, view: postView },
 ];
 
 const publicRoutes = ['/login', '/register', '/'];

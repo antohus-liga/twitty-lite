@@ -20,3 +20,8 @@ export async function likePost(postId) {
     });
     return await response.json();
 }
+
+export async function getPost(postId) {
+    const response = await fetch(`/api/posts/${postId}`);
+    return await response.json();
+}
