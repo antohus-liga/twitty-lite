@@ -1,5 +1,6 @@
 import {navigate} from "../navigate.js";
 import {getUser} from "../api/users.js";
+import {postTemplate, setupPostListeners} from "../components/post.js";
 
 export async function profileView(username) {
     const data = await getUser(username);
@@ -16,15 +17,10 @@ export async function profileView(username) {
             <button id="dm-btn">Send DM</button>
         </div>
         <div id="user-posts">
-            ${data.posts.map(post => `
-                <div class="post">
-                    <p class="post-content">${post.content}</p>
-                    <span>❤️ ${post.likeCount}</span>
-                    <span>💬 ${post.commentCount}</span>
-                </div>
-            `).join('')}
+            ${data.posts.map(postTemplate).join('')}
         </div>
     `;
+    setupPostListeners('user-posts', () => profileView(data.user.username))
 
     document.getElementById('dm-btn').addEventListener('click', () => {
         navigate(`/dms/${data.user.username}`);
