@@ -2,6 +2,8 @@ import {login} from "../api/auth.js";
 import {navigate} from "../navigate.js";
 
 export async function loginView() {
+    document.getElementById('navbar').innerHTML = ''
+
     document.getElementById('app').innerHTML = `
         <div class="auth-container">
             <h1>Twitty Lite</h1>
