@@ -2,6 +2,12 @@
 
 session_start();
 
+if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') !== 'XMLHttpRequest') {
+    http_response_code(403);
+    echo json_encode(['error' => 'Forbidden']);
+    exit;
+}
+
 require_once '../vendor/autoload.php';
 
 use App\Controllers\CommentController;

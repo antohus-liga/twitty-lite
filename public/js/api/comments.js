@@ -1,20 +1,21 @@
+import {apiFetch} from "./fetch.js";
+
 export async function getComments(postId) {
-    const response = await fetch(`/api/posts/${postId}/comments`);
-    return await response.json();
+    const response = await apiFetch(`/api/posts/${postId}/comments`);
+    return await response;
 }
 
 export async function createComment(postId, content) {
-    const response = await fetch(`/api/posts/${postId}/comments`, {
+    const response = await apiFetch(`/api/posts/${postId}/comments`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({content})
     })
-    return await response.json();
+    return await response;
 }
 
 export async function likeComment(commentId) {
-    const response = await fetch(`/api/comments/${commentId}/like`, {
+    const response = await apiFetch(`/api/comments/${commentId}/like`, {
         method: 'POST'
     });
-    return await response.json();
+    return await response;
 }

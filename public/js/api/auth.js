@@ -1,26 +1,26 @@
+import {apiFetch} from "./fetch.js";
+
 export async function login(username, password) {
-    const response = await fetch('/api/login', {
+    const response = await apiFetch('/api/login', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({username, password})
     });
-    return await response.json();
+    return await response;
 }
 
 export async function register(username, password) {
-    const response = await fetch('/api/register', {
+    const response = await apiFetch('/api/register', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({username, password})
     });
-    return await response.json();
+    return await response;
 }
 
 export async function me() {
-    const response = await fetch('/api/me')
-    return await response.json();
+    const response = await apiFetch('/api/me')
+    return await response;
 }
 
 export async function logout() {
-    await fetch('/api/logout', {method: 'POST'});
+    await apiFetch('/api/logout', {method: 'POST'});
 }

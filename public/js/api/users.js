@@ -1,4 +1,6 @@
+import {apiFetch} from "./fetch.js";
+
 export async function getUser(username) {
-    const response = await fetch(`/api/users/${username}`);
-    return await response.json();
+    const response = apiFetch(`/api/users/${username}`)
+    return await response;
 }
