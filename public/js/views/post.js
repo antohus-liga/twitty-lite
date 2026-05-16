@@ -14,6 +14,7 @@ export async function postView(postId) {
                 <textarea id="comment-content" placeholder="What do you think about this?"></textarea>
                 <button class="submit-comment-btn">Comment</button>
             </div>
+            <p id="error-msg" class="error"></p>
             <div id="comments">
                 ${comments.map((comment) => commentTemplate(comment)).join('')}
             </div>
@@ -39,7 +40,13 @@ export async function postView(postId) {
         if (e.target.classList.contains('submit-comment-btn')) {
             const content = document.getElementById('comment-content').value;
 
-            await createComment(postId, content);
+            const result = await createComment(postId, content);
+
+            if (result.error) {
+                document.getElementById('error-msg').textContent = result.error;
+                return;
+            }
+
             await postView(postId);
         }
     });

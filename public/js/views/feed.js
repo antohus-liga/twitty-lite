@@ -1,6 +1,5 @@
-import {postTemplate} from "../components/post.js";
-import {createPost, getPosts, likePost} from "../api/posts.js";
-import {navigate} from "../navigate.js";
+import {postTemplate, setupPostListeners} from "../components/post.js";
+import {createPost, getPosts} from "../api/posts.js";
 
 export async function feedView() {
     const posts = await getPosts();
@@ -9,31 +8,22 @@ export async function feedView() {
             <textarea id="post-content" placeholder="What's on your mind?"></textarea>
             <button id="post-btn">Post</button>
         </div>
+        <p id="error-msg" class="error"></p>
         <div id="feed">
             ${posts.map(postTemplate).join('')}
         </div>
     `;
-
-    document.getElementById('feed').addEventListener('click', async(e) => {
-        if (e.target.classList.contains('post-author')) {
-            e.preventDefault();
-            const username = e.target.getAttribute('href').split('/').pop();
-            navigate(`/profile/${username}`);
-        }
-        if (e.target.classList.contains('like-btn')) {
-            const postId = e.target.dataset.id;
-            await likePost(postId);
-            await feedView();
-        }
-        if (e.target.classList.contains('comment-btn')) {
-            const postId = e.target.dataset.id;
-            navigate(`/post/${postId}`)
-        }
-    });
+    setupPostListeners('feed', () => feedView());
 
     document.getElementById('post-btn').addEventListener('click', async () => {
         const content = document.getElementById('post-content').value;
-        await createPost(content);
+        const result = await createPost(content);
+
+        if (result.error) {
+            document.getElementById('error-msg').textContent = result.error;
+            return;
+        }
+
         await feedView();
     });
 }

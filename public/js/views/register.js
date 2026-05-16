@@ -7,6 +7,7 @@ export async function registerView() {
             <h1>Twitty Lite</h1>
             <input type="text" id="username" placeholder="Username" />
             <input type="password" id="password" placeholder="Password" />
+            <p id="error-msg" class="error"></p>
             <button id="register-btn">Register</button>
             <p>Already have an account? <a href="/login" id="login-link">Login</a></p>
         </div>
@@ -18,7 +19,7 @@ export async function registerView() {
         const result = await register(username, password);
 
         if (result.error) {
-            alert(result.error);
+            document.getElementById('error-msg').textContent = result.error;
             return;
         }
 

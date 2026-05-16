@@ -9,6 +9,7 @@ export async function loginView() {
             <h1>Twitty Lite</h1>
             <input type="text" id="username" placeholder="Username" />
             <input type="password" id="password" placeholder="Password" />
+            <p id="error-msg" class="error"></p>
             <button id="login-btn">Login</button>
             <p>Don't have an account? <a href="/register" id="register-link">Register</a></p>
         </div>
@@ -20,7 +21,7 @@ export async function loginView() {
         const result = await login(username, password);
 
         if (result.error) {
-            alert(result.error);
+            document.getElementById('error-msg').textContent = result.error;
             return;
         }
 
