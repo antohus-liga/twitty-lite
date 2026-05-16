@@ -24,6 +24,14 @@ class AuthService {
             throw new \InvalidArgumentException('Username cannot exceed 50 characters');
         }
 
+        if (strlen($username) <= 6) {
+            throw new \InvalidArgumentException('Username should be at least 6 characters long');
+        }
+
+        if (strlen($password) <= 8) {
+            throw new \InvalidArgumentException('Password should be at least 8 characters long');
+        }
+
         if ($this->userService->findByUsername($username)) {
             throw new \InvalidArgumentException("Username $username is taken");
         }
