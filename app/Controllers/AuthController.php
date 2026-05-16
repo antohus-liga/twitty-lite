@@ -65,7 +65,7 @@ class AuthController {
         http_response_code(200);
         echo json_encode([
             'id' => $currentUser->id,
-            'username' => $currentUser->username,
+            'username' => htmlspecialchars($currentUser->username),
             'created_at' => $currentUser->createdAt,
         ]);
     }

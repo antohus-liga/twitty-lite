@@ -28,13 +28,13 @@ class UserController {
         http_response_code(200);
         echo json_encode([
             'user' => [
-                'username' => $user->username,
+                'username' => htmlspecialchars($user->username),
                 'createdAt' => $user->createdAt
             ],
             'posts' => array_map(fn(Post $post) => [
                 'id' => $post->id,
-                'username' => $post->username,
-                'content' => $post->content,
+                'username' => htmlspecialchars($post->username),
+                'content' => htmlspecialchars($post->content),
                 'createdAt' => $post->createdAt,
                 'likeCount' => $post->likeCount,
                 'commentCount' => $post->commentCount,

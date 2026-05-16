@@ -57,9 +57,9 @@ class PostController {
         echo json_encode([
             'id' => $post->id,
             'userId' => $post->userId,
-            'content' => $post->content,
+            'content' => htmlspecialchars($post->content),
             'createdAt' => $post->createdAt,
-            'username' => $post->username,
+            'username' => htmlspecialchars($post->username),
             'likeCount' => $post->likeCount,
             'commentCount' => $post->commentCount,
         ]);

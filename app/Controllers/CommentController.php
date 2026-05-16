@@ -22,9 +22,9 @@ class CommentController {
             'id' => $comment->id,
             'userId' => $comment->userId,
             'postId' => $comment->postId,
-            'content' => $comment->content,
+            'content' => htmlspecialchars($comment->content),
             'createdAt' => $comment->createdAt,
-            'username' => $comment->username,
+            'username' => htmlspecialchars($comment->username),
             'likeCount' => $comment->likeCount,
         ], $comments));
     }
