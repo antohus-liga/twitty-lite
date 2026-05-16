@@ -16,11 +16,15 @@ export async function feedView() {
     setupPostListeners('feed', () => feedView());
 
     document.getElementById('post-btn').addEventListener('click', async () => {
+        const btn = document.getElementById('post-btn');
         const content = document.getElementById('post-content').value;
-        const result = await createPost(content);
 
+        btn.disabled = true;
+
+        const result = await createPost(content);
         if (result.error) {
             document.getElementById('error-msg').textContent = result.error;
+            btn.disabled = false;
             return;
         }
 

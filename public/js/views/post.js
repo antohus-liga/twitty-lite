@@ -12,7 +12,7 @@ export async function postView(postId) {
             ${postTemplate(post)}
             <div id="create-comment">
                 <textarea id="comment-content" placeholder="What do you think about this?"></textarea>
-                <button class="submit-comment-btn">Comment</button>
+                <button id="submit-comment-btn">Comment</button>
             </div>
             <p id="error-msg" class="error"></p>
             <div id="comments">
@@ -37,17 +37,22 @@ export async function postView(postId) {
             await likeComment(commentId);
             await postView(postId);
         }
-        if (e.target.classList.contains('submit-comment-btn')) {
-            const content = document.getElementById('comment-content').value;
-
-            const result = await createComment(postId, content);
-
-            if (result.error) {
-                document.getElementById('error-msg').textContent = result.error;
-                return;
-            }
-
-            await postView(postId);
-        }
     });
+
+    document.getElementById('submit-comment-btn').addEventListener('click', async() => {
+        const content = document.getElementById('comment-content').value;
+        const btn = document.getElementById('submit-comment-btn');
+
+        btn.disabled = true;
+
+        const result = await createComment(postId, content);
+
+        if (result.error) {
+            document.getElementById('error-msg').textContent = result.error;
+            btn.disabled = false;
+            return;
+        }
+
+        await postView(postId);
+    }) ;
 }
