@@ -1,5 +1,6 @@
 import {navigate} from "../navigate.js";
 import {logout} from "../api/auth.js";
+import {setCurrentUser} from "../state.js";
 
 export function renderNavbar(username) {
     return `
@@ -25,6 +26,7 @@ export function setupNavbar() {
 
     document.getElementById('logout-btn').addEventListener('click', async () => {
         await logout();
+        setCurrentUser(null);
         navigate('/login');
     })
 }

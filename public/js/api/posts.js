@@ -24,3 +24,18 @@ export async function getPost(postId) {
     const response = await apiFetch(`/api/posts/${postId}`);
     return await response;
 }
+
+export async function editPost(postId, content) {
+    const response = await apiFetch(`/api/posts/${postId}`, {
+        method: 'PUT',
+        body: JSON.stringify({content})
+    });
+    return await response;
+}
+
+export async function deletePost(postId) {
+    const response = await apiFetch(`/api/posts/${postId}`, {
+        method: 'DELETE',
+    });
+    return await response;
+}

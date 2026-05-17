@@ -1,5 +1,6 @@
 import {login} from "../api/auth.js";
 import {navigate} from "../navigate.js";
+import {setCurrentUser} from "../state.js";
 
 export async function loginView() {
     document.getElementById('navbar').innerHTML = ''
@@ -25,6 +26,7 @@ export async function loginView() {
             return;
         }
 
+        setCurrentUser(result);
         navigate('/feed');
     });
 

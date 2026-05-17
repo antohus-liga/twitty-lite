@@ -5,6 +5,7 @@ import {renderNavbar, setupNavbar} from "./components/navbar.js";
 import {profileView} from "./views/profile.js";
 import {me} from "./api/auth.js";
 import {postView} from "./views/post.js";
+import {getCurrentUser} from "./state.js";
 
 const routes = [
     { path: /^\/$/, view: loginView },
@@ -22,7 +23,7 @@ export async function render() {
     const isPublic = publicRoutes.includes(path);
 
     if (!isPublic) {
-        const user = await me();
+        const user = getCurrentUser();
         document.getElementById('navbar').innerHTML = isPublic ? '' : renderNavbar(user.username);
         setupNavbar();
     }
@@ -31,7 +32,7 @@ export async function render() {
         const match = path.match(route.path);
         if (match) {
             const params = match.slice(1);
-            route.view(...params);
+            await route.view(...params);
             return;
         }
     }

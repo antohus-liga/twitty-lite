@@ -45,7 +45,11 @@ class AuthController {
         }
 
         http_response_code(200);
-        echo json_encode(['message' => 'User logged in']);
+        echo json_encode([
+            'id' => $user->id,
+            'username' => htmlspecialchars($user->username),
+            'createdAt' => $user->createdAt,
+        ]);
     }
 
     public function logout(): void {
