@@ -23,13 +23,22 @@ class UserController {
             return;
         }
 
+
+
         $posts = $this->postService->getByUserId($user->id);
 
         http_response_code(200);
         echo json_encode([
             'user' => [
                 'username' => htmlspecialchars($user->username),
-                'createdAt' => $user->createdAt
+                'createdAt' => $user->createdAt,
+                ...array_filter([
+                    'bio' => htmlspecialchars($user->bio),
+                    'dateOfBirth' => $user->dateOfBirth,
+                    'location' => $user->location,
+                    'website' => htmlspecialchars($user->website),
+                    'occupation' => $user->occupation,
+                ])
             ],
             'posts' => array_map(fn(Post $post) => [
                 'id' => $post->id,
@@ -40,5 +49,27 @@ class UserController {
                 'commentCount' => $post->commentCount,
             ], $posts)
         ]);
+    }
+
+    public function updateProfile(): void {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        try {
+            $this->userService->updateProfile(
+                $_SESSION['user_id'],
+                $data['bio'],
+                $data['dateOfBirth'],
+                $data['location'],
+                $data['website'],
+                $data['occupation']
+            );
+        } catch (\InvalidArgumentException $e) {
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+            return;
+        }
+
+        http_response_code(200);
+        echo json_encode(['message' => 'Profile updated']);
     }
 }

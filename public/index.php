@@ -70,6 +70,7 @@ $router->add('DELETE', '/api/comments/{id}', [$commentController, 'remove'], tru
 
 // User Profiles
 $router->add('GET', '/api/users/{username}', [$userController, 'show']);
+$router->add('PUT', '/api/users/profile', [$userController, 'updateProfile'], true);
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);

@@ -53,4 +53,24 @@ class UserRepository {
             $row['occupation'],
         );
     }
+
+    public function updateProfile(int $id, string $bio, string $dateOfBirth, string $location, string $website, string $occupation): void {
+        $stmt = $this->db->prepare("
+        UPDATE users SET 
+        bio = :bio,
+        date_of_birth = :dateOfBirth,
+        location = :location,
+        website = :website,
+        occupation = :occupation
+        WHERE id = :id");
+
+        $stmt->execute([
+            'bio' => $bio,
+            'dateOfBirth' => $dateOfBirth,
+            'location' => $location,
+            'website' => $website,
+            'occupation' => $occupation,
+            'id' => $id,
+        ]);
+    }
 }

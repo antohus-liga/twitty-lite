@@ -23,4 +23,15 @@ class UserService {
     public function findById(int $id): ?User {
         return $this->userRepository->findById($id);
     }
+
+    public function updateProfile(int $id, string $bio, string $dateOfBirth, string $location, string $website, string $occupation): void {
+        if (strlen($bio) > 160) {
+            throw new \InvalidArgumentException("Bio cannot be longer than 160 characters");
+        }
+        if (!empty($website) && !filter_var($website, FILTER_VALIDATE_URL)) {
+            throw new \InvalidArgumentException("Invalid website URL");
+        }
+
+        $this->userRepository->updateProfile($id, $bio, $dateOfBirth, $location, $website, $occupation);
+    }
 }
