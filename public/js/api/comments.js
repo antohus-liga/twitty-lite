@@ -19,3 +19,18 @@ export async function likeComment(commentId) {
     });
     return await response;
 }
+
+export async function editComment(commentId, content) {
+    const response = await apiFetch(`/api/comments/${commentId}`, {
+        method: 'PUT',
+        body: JSON.stringify({content})
+    });
+    return await response;
+}
+
+export async function deleteComment(commentId) {
+    const response = await apiFetch(`/api/comments/${commentId}`, {
+        method: 'DELETE',
+    });
+    return await response;
+}

@@ -1,7 +1,7 @@
 import {postTemplate} from "../components/post.js";
-import {getPost, likePost} from "../api/posts.js";
+import {editPost, getPost, likePost} from "../api/posts.js";
 import {navigate} from "../navigate.js";
-import {createComment, getComments, likeComment} from "../api/comments.js";
+import {createComment, deleteComment, editComment, getComments, likeComment} from "../api/comments.js";
 import {commentTemplate} from "../components/comment.js";
 
 export async function postView(postId) {
@@ -36,6 +36,71 @@ export async function postView(postId) {
             const commentId = e.target.dataset.id;
             await likeComment(commentId);
             await postView(postId);
+        }
+        if (e.target.classList.contains('delete-comment-btn')) {
+            const commentId = e.target.dataset.id;
+            await deleteComment(commentId);
+            await postView(postId);
+        }
+        if (e.target.classList.contains('edit-comment-btn')) {
+            const commentId = e.target.dataset.id;
+            const commentDiv = document.querySelector(`.comment[data-id="${commentId}"]`);
+            const contentP = commentDiv.querySelector('.comment-content');
+            const originalContent = contentP.textContent;
+            const editButton = e.target;
+            editButton.style.display = 'none';
+
+            document.querySelectorAll('.edit-comment-btn').forEach(btn => {
+                btn.disabled = true;
+            });
+
+            const textarea = document.createElement('textarea');
+            textarea.value = originalContent;
+            textarea.classList.add('edit-textarea');
+
+            const saveBtn = document.createElement('button');
+            saveBtn.textContent = 'Save';
+            saveBtn.classList.add('save-comment-btn');
+
+            contentP.replaceWith(textarea);
+            textarea.focus();
+            e.target.after(saveBtn);
+            let saving = false;
+
+            const reEnableEditBtns = () => {
+                document.querySelectorAll('.edit-comment-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
+            }
+
+            const onMouseUp = () => {
+                if (saving) {
+                    saving = false;
+                    textarea.focus();
+                }
+            };
+
+            saveBtn.addEventListener('mousedown', () => {
+                saving = true;
+            });
+
+            document.addEventListener('mouseup', onMouseUp)
+
+            textarea.addEventListener('blur', () => {
+                if (saving) return;
+                textarea.replaceWith(contentP);
+                saveBtn.remove();
+                editButton.style.display = '';
+                reEnableEditBtns();
+            });
+
+            saveBtn.addEventListener('click', async () => {
+                const newContent = textarea.value;
+                const result = await editComment(commentId, newContent);
+                if (result.error) return;
+                reEnableEditBtns();
+                await postView(postId);
+            });
         }
     });
 

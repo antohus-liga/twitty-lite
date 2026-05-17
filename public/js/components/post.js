@@ -73,16 +73,18 @@ export function setupPostListeners(containerId, onUpdate) {
                 });
             }
 
-            saveBtn.addEventListener('mousedown', () => {
-                saving = true;
-            });
-
-            document.addEventListener('mouseup', () => {
+            const onMouseUp = () => {
                 if (saving) {
                     saving = false;
                     textarea.focus();
                 }
-            })
+            };
+
+            saveBtn.addEventListener('mousedown', () => {
+                saving = true;
+            });
+
+            document.addEventListener('mouseup', onMouseUp)
 
             textarea.addEventListener('blur', () => {
                 if (saving) return;
