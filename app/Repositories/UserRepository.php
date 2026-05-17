@@ -20,12 +20,7 @@ class UserRepository {
 
         if (!$row) return null;
 
-        return new User(
-            $row['id'],
-            $row['username'],
-            $row['password'],
-            $row['created_at']
-        );
+        return $this->toModel($row);
     }
 
     public function findById(int $id): ?User {
@@ -35,12 +30,7 @@ class UserRepository {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) return null;
-        return new User(
-            $row['id'],
-            $row['username'],
-            $row['password'],
-            $row['created_at']
-        );
+        return $this->toModel($row);
     }
 
     public function create(string $username, string $password): void {
@@ -48,5 +38,19 @@ class UserRepository {
             "INSERT INTO users (username, password) VALUES (:username, :password)"
         );
         $stmt->execute([':username' => $username, ':password' => $password]);
+    }
+
+    private function toModel($row): User {
+        return new User(
+            $row['id'],
+            $row['username'],
+            $row['password'],
+            $row['created_at'],
+            $row['bio'],
+            $row['date_of_birth'],
+            $row['location'],
+            $row['website'],
+            $row['occupation'],
+        );
     }
 }

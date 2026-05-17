@@ -26,15 +26,7 @@ class CommentRepository {
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if (!$rows) return [];
 
-        return array_map(fn($row) => new Comment(
-            $row['id'],
-            $row['user_id'],
-            $row['post_id'],
-            $row['content'],
-            $row['created_at'],
-            $row['username'],
-            $row['like_count'],
-        ), $rows);
+        return array_map(fn($row) => $this->toModel($row), $rows);
     }
 
     public function getById(int $id): ?Comment {
@@ -50,15 +42,7 @@ class CommentRepository {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$row) return null;
 
-        return new Comment(
-            $row['id'],
-            $row['user_id'],
-            $row['post_id'],
-            $row['content'],
-            $row['created_at'],
-            $row['username'],
-            $row['like_count'],
-        );
+        return $this->toModel($row);
     }
 
     public function create(int $userId, int $postId, string $content): void {
@@ -74,5 +58,17 @@ class CommentRepository {
     public function update(int $id, string $content): void {
         $stmt = $this->db->prepare("UPDATE comments SET content = :content WHERE id = :id");
         $stmt->execute(['content' => $content, 'id' => $id]);
+    }
+
+    private function toModel($row): Comment {
+        return new Comment(
+            $row['id'],
+            $row['user_id'],
+            $row['post_id'],
+            $row['content'],
+            $row['created_at'],
+            $row['username'],
+            $row['like_count'],
+        );
     }
 }

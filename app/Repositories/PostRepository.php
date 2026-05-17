@@ -25,15 +25,7 @@ class PostRepository {
         ");
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return array_map(fn($row) => new Post(
-            $row['id'],
-            $row['user_id'],
-            $row['content'],
-            $row['created_at'],
-            $row['username'],
-            (int) $row['like_count'],
-            (int) $row['comment_count'],
-        ), $rows);
+        return array_map(fn($row) => $this->toModel($row), $rows);
     }
 
     public function getByUserId(int $userId): array {
@@ -52,15 +44,7 @@ class PostRepository {
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (!$rows) return [];
-        return array_map(fn($row) => new Post(
-            $row['id'],
-            $row['user_id'],
-            $row['content'],
-            $row['created_at'],
-            $row['username'],
-            (int) $row['like_count'],
-            (int) $row['comment_count'],
-        ), $rows);
+        return array_map(fn($row) => $this->toModel($row), $rows);
     }
 
     public function getById(int $id): ?Post {
@@ -77,15 +61,7 @@ class PostRepository {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) return null;
-        return new Post(
-            $row['id'],
-            $row['user_id'],
-            $row['content'],
-            $row['created_at'],
-            $row['username'],
-            (int) $row['like_count'],
-            (int) $row['comment_count'],
-        );
+        return $this->toModel($row);
     }
 
     public function create(int $userId, string $content): void {
@@ -103,5 +79,17 @@ class PostRepository {
     public function update(int $id, string $content): void {
         $stmt = $this->db->prepare("UPDATE posts SET content = :content WHERE id = :id");
         $stmt->execute(['content' => $content, 'id' => $id]);
+    }
+
+    private function toModel($row): Post {
+        return new Post(
+            $row['id'],
+            $row['user_id'],
+            $row['content'],
+            $row['created_at'],
+            $row['username'],
+            (int) $row['like_count'],
+            (int) $row['comment_count'],
+        );
     }
 }

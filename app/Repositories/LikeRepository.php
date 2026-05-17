@@ -19,12 +19,7 @@ class LikeRepository {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$row) return null;
 
-        return new Like(
-            $row['id'],
-            $row['user_id'],
-            $row['target_id'],
-            $row['type'],
-        );
+        return $this->toModel($row);
     }
 
     public function add(int $userId, int $targetId, string $type): void {
@@ -35,5 +30,14 @@ class LikeRepository {
     public function remove(int $userId, int $targetId, string $type): void {
         $stmt = $this->db->prepare("DELETE FROM likes WHERE user_id = :user_id AND target_id = :target_id AND type = :type");
         $stmt->execute(['user_id' => $userId, 'target_id' => $targetId, 'type' => $type]);
+    }
+
+    private function toModel(array $row): Like {
+        return new Like(
+            $row['id'],
+            $row['user_id'],
+            $row['target_id'],
+            $row['type'],
+        );
     }
 }
