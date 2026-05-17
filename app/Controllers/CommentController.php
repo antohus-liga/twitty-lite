@@ -44,4 +44,32 @@ class CommentController {
         http_response_code(201);
         echo json_encode(['message' => 'Comment created']);
     }
+
+    public function remove(int $id): void {
+        try {
+            $this->commentService->remove($id, $_SESSION['user_id']);
+        } catch (\InvalidArgumentException $e) {
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+            return;
+        }
+
+        http_response_code(200);
+        echo json_encode(['message' => 'Post removed']);
+    }
+
+    public function update(int $id): void {
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        try {
+            $this->commentService->update($id, $_SESSION['user_id'], $data['content']);
+        } catch (\InvalidArgumentException $e) {
+            http_response_code(400);
+            echo json_encode(['error' => $e->getMessage()]);
+            return;
+        }
+
+        http_response_code(200);
+        echo json_encode(['message' => 'Post updated']);
+    }
 }

@@ -94,4 +94,14 @@ class PostRepository {
         );
         $stmt->execute([':user_id' => $userId, ':content' => $content]);
     }
+
+    public function remove(int $id): void {
+        $stmt = $this->db->prepare("DELETE FROM posts WHERE id = :id");
+        $stmt->execute(['id' => $id]);
+    }
+
+    public function update(int $id, string $content): void {
+        $stmt = $this->db->prepare("UPDATE posts SET content = :content WHERE id = :id");
+        $stmt->execute(['content' => $content, 'id' => $id]);
+    }
 }

@@ -2,11 +2,11 @@
 
 session_start();
 
-if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') !== 'XMLHttpRequest') {
-    http_response_code(403);
-    echo json_encode(['error' => 'Forbidden']);
-    exit;
-}
+//if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') !== 'XMLHttpRequest') {
+//    http_response_code(403);
+//    echo json_encode(['error' => 'Forbidden']);
+//    exit;
+//}
 
 require_once '../vendor/autoload.php';
 
@@ -45,19 +45,30 @@ $userController = new UserController($postService, $userService);
 $commentController = new CommentController($commentService);
 
 $router = new Router();
+// Auth
 $router->add('POST', '/api/register', [$authController, 'register']);
 $router->add('POST', '/api/login', [$authController, 'login']);
 $router->add('GET', '/api/me', [$authController, 'me'], true);
 $router->add('POST', '/api/logout', [$authController, 'logout'], true);
 
+// Posts
 $router->add('GET', '/api/posts', [$postController, 'index']);
 $router->add('POST', '/api/posts', [$postController, 'store'], true);
 $router->add('GET', '/api/posts/{id}', [$postController, 'show'], true);
-$router->add('GET', '/api/posts/{id}/comments', [$commentController, 'index']);
-$router->add('POST', '/api/posts/{id}/comments', [$commentController, 'store'], true);
+$router->add('PUT', '/api/posts/{id}', [$postController, 'update'], true);
+$router->add('DELETE', '/api/posts/{id}', [$postController, 'remove'], true);
+
+// Likes
 $router->add('POST', '/api/posts/{id}/like', [$likeController, 'toggleOnPost'], true);
 $router->add('POST', '/api/comments/{id}/like', [$likeController, 'toggleOnComment'], true);
 
+// Comments
+$router->add('GET', '/api/posts/{id}/comments', [$commentController, 'index']);
+$router->add('POST', '/api/posts/{id}/comments', [$commentController, 'store'], true);
+$router->add('PUT', '/api/comments/{id}', [$commentController, 'update'], true);
+$router->add('DELETE', '/api/comments/{id}', [$commentController, 'remove'], true);
+
+// User Profiles
 $router->add('GET', '/api/users/{username}', [$userController, 'show']);
 
 $method = $_SERVER['REQUEST_METHOD'];

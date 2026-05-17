@@ -35,4 +35,26 @@ class PostService {
 
         $this->postRepository->create($userId, $content);
     }
+
+    public function remove(int $postId, int $userId): void {
+        $post = $this->postRepository->getById($postId);
+        if (!$post) {
+            throw new \InvalidArgumentException('Post not found');
+        }
+        if ($post->userId !== $userId) {
+            throw new \InvalidArgumentException('Unauthorized');
+        }
+        $this->postRepository->remove($postId);
+    }
+
+    public function update(int $postId, int $userId, string $content): void {
+        $post = $this->postRepository->getById($postId);
+        if (!$post) {
+            throw new \InvalidArgumentException('Post not found');
+        }
+        if ($post->userId !== $userId) {
+            throw new \InvalidArgumentException('Unauthorized');
+        }
+        $this->postRepository->update($postId, $content);
+    }
 }

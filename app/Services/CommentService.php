@@ -26,4 +26,26 @@ class CommentService {
 
         $this->commentRepository->create($userId, $postId, $content);
     }
+
+    public function remove(int $commentId, int $userId): void {
+        $comment = $this->commentRepository->getById($commentId);
+        if (!$comment) {
+            throw new \InvalidArgumentException('Comment not found');
+        }
+        if ($comment->userId !== $userId) {
+            throw new \InvalidArgumentException('Unauthorized');
+        }
+        $this->commentRepository->remove($commentId);
+    }
+
+    public function update(int $commentId, int $userId, string $content): void {
+        $comment = $this->commentRepository->getById($commentId);
+        if (!$comment) {
+            throw new \InvalidArgumentException('Comment not found');
+        }
+        if ($comment->userId !== $userId) {
+            throw new \InvalidArgumentException('Unauthorized');
+        }
+        $this->commentRepository->update($commentId, $content);
+    }
 }
