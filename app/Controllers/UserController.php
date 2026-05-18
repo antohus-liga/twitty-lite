@@ -32,13 +32,11 @@ class UserController {
             'user' => [
                 'username' => htmlspecialchars($user->username),
                 'createdAt' => $user->createdAt,
-                ...array_filter([
-                    'bio' => htmlspecialchars($user->bio),
-                    'dateOfBirth' => $user->dateOfBirth,
-                    'location' => $user->location,
-                    'website' => htmlspecialchars($user->website),
-                    'occupation' => $user->occupation,
-                ])
+                'bio' => $user->bio ? htmlspecialchars($user->bio) : null,
+                'dateOfBirth' => $user->dateOfBirth,
+                'location' => $user->location,
+                'website' => $user->website ? htmlspecialchars($user->website) : null,
+                'occupation' => $user->occupation,
             ],
             'posts' => array_map(fn(Post $post) => [
                 'id' => $post->id,
