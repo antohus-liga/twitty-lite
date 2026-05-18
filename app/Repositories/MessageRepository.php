@@ -30,7 +30,8 @@ class MessageRepository {
         $stmt = $this->db->prepare("
             SELECT * FROM messages 
             WHERE sender_id = :userId AND receiver_id = :otherUserId 
-            OR sender_id = :otherUserId AND receiver_id = :userId");
+            OR sender_id = :otherUserId AND receiver_id = :userId
+            ORDER BY created_at ASC");
         $stmt->execute(['userId' => $userId, 'otherUserId' => $otherUserId]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return array_map(fn ($row) => $this->toMessageModel($row), $rows);

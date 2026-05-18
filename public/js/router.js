@@ -6,6 +6,8 @@ import {profileView} from "./views/profile.js";
 import {me} from "./api/auth.js";
 import {postView} from "./views/post.js";
 import {getCurrentUser} from "./state.js";
+import {dmsListView} from "./views/dmsList.js";
+import {dmsView} from "./views/dms.js";
 
 const routes = [
     { path: /^\/$/, view: loginView },
@@ -14,6 +16,8 @@ const routes = [
     { path: /^\/feed$/, view: feedView },
     { path: /^\/profile\/(\w+)$/, view: profileView },
     { path: /^\/post\/(\w+)$/, view: postView },
+    { path: /^\/dms$/, view: dmsListView },
+    { path: /^\/dms\/(\w+)$/, view: dmsView },
 ];
 
 const publicRoutes = ['/login', '/register', '/'];
