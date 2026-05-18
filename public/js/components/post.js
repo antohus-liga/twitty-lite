@@ -11,12 +11,14 @@ export function postTemplate(post) {
             <p class="post-timestamp">${dayjs(post.createdAt).fromNow()}</p>
             <a href="/profile/${post.username}" class="post-author">@${post.username}</a>
             <p class="post-content">${post.content}</p>
-            <button class="like-btn" data-id="${post.id}">❤️ ${post.likeCount}</button>
-            <button class="comment-btn" data-id="${post.id}">💬 ${post.commentCount}</button>
-            ${isOwner ? `
-                <button class="edit-post-btn" data-id="${post.id}">Edit</button>
-                <button class="delete-post-btn" data-id="${post.id}">Delete</button>
-            ` : ''}
+            <div class="actions">
+                <button class="like-btn" data-id="${post.id}">❤️ ${post.likeCount}</button>
+                <button class="comment-btn" data-id="${post.id}">💬 ${post.commentCount}</button>
+                ${isOwner ? `
+                    <button class="edit-post-btn" data-id="${post.id}">Edit</button>
+                    <button class="delete-post-btn" data-id="${post.id}">Delete</button>
+                ` : ''}
+            </div>
         </div>
     `;
 }

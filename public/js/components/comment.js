@@ -9,11 +9,13 @@ export function commentTemplate(comment) {
             <p class="comment-timestamp">${dayjs(comment.createdAt).fromNow()}</p>
             <a href="/profile/${comment.username}" class="comment-author">@${comment.username}</a>
             <p class="comment-content">${comment.content}</p>
-            <button class="like-comment-btn" data-id="${comment.id}">❤️ ${comment.likeCount}</button>
-            ${isOwner ? `
-                <button class="edit-comment-btn" data-id="${comment.id}">Edit</button>
-                <button class="delete-comment-btn" data-id="${comment.id}">Delete</button>
-            ` : ''}
+            <div class="actions">
+                <button class="like-comment-btn" data-id="${comment.id}">❤️ ${comment.likeCount}</button>
+                ${isOwner ? `
+                    <button class="edit-comment-btn" data-id="${comment.id}">Edit</button>
+                    <button class="delete-comment-btn" data-id="${comment.id}">Delete</button>
+                ` : ''}
+            </div>
         </div>
     `;
 }

@@ -17,7 +17,7 @@ export async function profileView(username) {
         <div class="profile">
             <h2>@${data.user.username}</h2>
             <p>Member since ${dayjs(data.user.createdAt).format('DD/MM/YYYY')}</p>
-            <button id="dm-btn">Send DM</button>
+            ${isOwner ? '' : `<button id="dm-btn">Send DM</button>`}
             ${isOwner ? `<button id="edit-profile-info">Edit Info</button>` : ''}
             <div id="profile-info">
                 <h3 class="user-info">User Info</h3>
@@ -161,7 +161,9 @@ export async function profileView(username) {
 
     setupPostListeners('user-posts', () => profileView(data.user.username))
 
-    document.getElementById('dm-btn').addEventListener('click', () => {
-        navigate(`/dms/${data.user.username}`);
-    });
+    if (!isOwner) {
+        document.getElementById('dm-btn').addEventListener('click', () => {
+            navigate(`/dms/${data.user.username}`);
+        });
+    }
 }
