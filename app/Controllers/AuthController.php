@@ -56,6 +56,7 @@ class AuthController {
         unset($_SESSION['user_id']);
         session_destroy();
         http_response_code(200);
+        echo json_encode(['message' => 'User logged out']);
     }
 
     public function me(): void {
