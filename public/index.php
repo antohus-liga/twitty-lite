@@ -48,7 +48,7 @@ $postController = new PostController($postService);
 $likeController = new LikeController($likeService);
 $userController = new UserController($postService, $userService);
 $commentController = new CommentController($commentService);
-$messageController = new MessageController($messageService);
+$messageController = new MessageController($messageService, $userService);
 
 $router = new Router();
 // Auth
@@ -80,8 +80,8 @@ $router->add('PUT', '/api/users/profile', [$userController, 'updateProfile'], tr
 
 // DMs
 $router->add('GET', '/api/dms', [$messageController, 'conversations'], true);
-$router->add('GET', '/api/dms/{id}', [$messageController, 'messages'], true);
-$router->add('POST', '/api/dms/{id}', [$messageController, 'store'], true);
+$router->add('GET', '/api/dms/{username}', [$messageController, 'messages'], true);
+$router->add('POST', '/api/dms/{username}', [$messageController, 'store'], true);
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
