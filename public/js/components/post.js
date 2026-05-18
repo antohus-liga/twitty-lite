@@ -12,7 +12,7 @@ export function postTemplate(post) {
             <a href="/profile/${post.username}" class="post-author">@${post.username}</a>
             <p class="post-content">${post.content}</p>
             <div class="actions">
-                <button class="like-btn" data-id="${post.id}">❤️ ${post.likeCount}</button>
+                <button class="like-btn ${post.isLiked ? 'liked' : ''}" data-id="${post.id}">❤️ ${post.likeCount}</button>
                 <button class="comment-btn" data-id="${post.id}">💬 ${post.commentCount}</button>
                 ${isOwner ? `
                     <button class="edit-post-btn" data-id="${post.id}">Edit</button>

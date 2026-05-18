@@ -13,7 +13,7 @@ class PostController {
     }
 
     public function index(): void {
-        $posts = $this->postService->getAll();
+        $posts = $this->postService->getAll($_SESSION['user_id']);
 
         header('Content-Type: application/json');
         echo json_encode(
@@ -25,6 +25,7 @@ class PostController {
                 'username' => $post->username,
                 'likeCount' => $post->likeCount,
                 'commentCount' => $post->commentCount,
+                'isLiked' => $post->isLiked,
             ], $posts)
         );
     }
@@ -45,7 +46,7 @@ class PostController {
     }
 
     public function show(int $id): void {
-        $post = $this->postService->getById($id);
+        $post = $this->postService->getById($id, $_SESSION['user_id']);
         if (!$post) {
             http_response_code(404);
             echo json_encode(['error' => 'Post not found']);
@@ -62,6 +63,7 @@ class PostController {
             'username' => htmlspecialchars($post->username),
             'likeCount' => $post->likeCount,
             'commentCount' => $post->commentCount,
+            'isLiked' => $post->isLiked,
         ]);
     }
 

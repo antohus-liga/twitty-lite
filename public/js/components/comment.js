@@ -10,7 +10,7 @@ export function commentTemplate(comment) {
             <a href="/profile/${comment.username}" class="comment-author">@${comment.username}</a>
             <p class="comment-content">${comment.content}</p>
             <div class="actions">
-                <button class="like-comment-btn" data-id="${comment.id}">❤️ ${comment.likeCount}</button>
+                <button class="like-comment-btn ${comment.isLiked ? 'liked' : ''}" data-id="${comment.id}">❤️ ${comment.likeCount}</button>
                 ${isOwner ? `
                     <button class="edit-comment-btn" data-id="${comment.id}">Edit</button>
                     <button class="delete-comment-btn" data-id="${comment.id}">Delete</button>

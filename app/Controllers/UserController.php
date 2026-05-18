@@ -25,7 +25,7 @@ class UserController {
 
 
 
-        $posts = $this->postService->getByUserId($user->id);
+        $posts = $this->postService->getByUserId($user->id, $_SESSION['user_id']);
 
         http_response_code(200);
         echo json_encode([
@@ -45,6 +45,7 @@ class UserController {
                 'createdAt' => $post->createdAt,
                 'likeCount' => $post->likeCount,
                 'commentCount' => $post->commentCount,
+                'isLiked' => $post->isLiked,
             ], $posts)
         ]);
     }

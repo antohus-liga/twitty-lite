@@ -11,5 +11,6 @@ class Post {
         public string $username,
         public int $likeCount,
         public int $commentCount,
+        public bool $isLiked = false,
     ) {}
 }

@@ -11,8 +11,8 @@ class CommentService {
         $this->commentRepository = $commentRepository;
     }
 
-    public function getCommentsByPostId(int $postId): array {
-        return $this->commentRepository->findByPostId($postId);
+    public function getCommentsByPostId(int $postId, int $currentUserId): array {
+        return $this->commentRepository->findByPostId($postId, $currentUserId);
     }
 
     public function create(int $userId, int $postId, string $content): void {

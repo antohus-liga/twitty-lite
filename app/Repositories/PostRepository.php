@@ -12,52 +12,56 @@ class PostRepository {
         $this->db = $db;
     }
 
-    public function getAll(): array {
-        $stmt = $this->db->query("
+    public function getAll(int $userId): array {
+        $stmt = $this->db->prepare("
             SELECT posts.*, 
-                   users.username, 
+                   users.username,
                    (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post') as like_count,
-                   (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count
+                   (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post' AND likes.user_id = :currentUserId) as is_liked
             FROM posts
             JOIN users ON posts.user_id = users.id
             GROUP BY posts.id
             ORDER BY posts.created_at DESC
         ");
+        $stmt->execute(['currentUserId' => $userId]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map(fn($row) => $this->toModel($row), $rows);
     }
 
-    public function getByUserId(int $userId): array {
+    public function getByUserId(int $userId, int $currentUserId): array {
         $stmt = $this->db->prepare("
             SELECT posts.*, 
-                   users.username, 
+                   users.username,
                    (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post') as like_count,
-                   (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count
+                   (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post' AND likes.user_id = :currentUserId) as is_liked
             FROM posts
             JOIN users ON posts.user_id = users.id
             WHERE posts.user_id = :userId
             GROUP BY posts.id
             ORDER BY posts.created_at DESC
         ");
-        $stmt->execute(['userId' => $userId]);
+        $stmt->execute(['userId' => $userId, 'currentUserId' => $currentUserId]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (!$rows) return [];
         return array_map(fn($row) => $this->toModel($row), $rows);
     }
 
-    public function getById(int $id): ?Post {
+    public function getById(int $id, int $userId): ?Post {
         $stmt = $this->db->prepare("
             SELECT posts.*, 
-                   users.username, 
+                   users.username,
                    (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post') as like_count,
-                   (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count
+                   (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) as comment_count,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = posts.id AND likes.type = 'post' AND likes.user_id = :currentUserId) as is_liked
             FROM posts
             JOIN users ON posts.user_id = users.id
             WHERE posts.id = :id
         ");
-        $stmt->execute(['id' => $id]);
+        $stmt->execute(['id' => $id, 'currentUserId' => $userId]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) return null;
@@ -90,6 +94,7 @@ class PostRepository {
             $row['username'],
             (int) $row['like_count'],
             (int) $row['comment_count'],
+            (bool) $row['is_liked'],
         );
     }
 }

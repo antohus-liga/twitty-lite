@@ -14,7 +14,7 @@ class CommentController {
     }
 
     public function index(int $postId): void {
-        $comments = $this->commentService->getCommentsByPostId($postId);
+        $comments = $this->commentService->getCommentsByPostId($postId, $_SESSION['user_id']);
 
         header('Content-Type: application/json');
         http_response_code(200);
@@ -26,6 +26,7 @@ class CommentController {
             'createdAt' => $comment->createdAt,
             'username' => htmlspecialchars($comment->username),
             'likeCount' => $comment->likeCount,
+            'isLiked' => $comment->isLiked,
         ], $comments));
     }
 

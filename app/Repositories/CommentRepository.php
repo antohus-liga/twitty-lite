@@ -12,18 +12,20 @@ class CommentRepository {
         $this->db = $db;
     }
 
-    public function findByPostId(int $postId): array {
+    public function findByPostId(int $postId, int $currentUserId): array {
         $stmt = $this->db->prepare("
             SELECT comments.*, 
                    users.username,
-                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = comments.id AND likes.type = 'comment') as like_count
-            FROM comments 
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = comments.id AND likes.type = 'comment') as like_count,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = comments.id AND likes.type = 'comment' AND likes.user_id = :currentUserId) as is_liked
+            FROM comments
             JOIN users ON users.id = comments.user_id
-            WHERE post_id = :postId 
-            ORDER BY created_at DESC");
-        $stmt->execute(['postId' => $postId]);
-
+            WHERE comments.post_id = :postId
+            ORDER BY comments.created_at DESC
+        ");
+        $stmt->execute(['postId' => $postId, 'currentUserId' => $currentUserId]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
         if (!$rows) return [];
 
         return array_map(fn($row) => $this->toModel($row), $rows);
@@ -33,13 +35,15 @@ class CommentRepository {
         $stmt = $this->db->prepare("
             SELECT comments.*, 
                    users.username,
-                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = comments.id AND likes.type = 'comment') as like_count
-            FROM comments 
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = comments.id AND likes.type = 'comment') as like_count,
+                   (SELECT COUNT(*) FROM likes WHERE likes.target_id = comments.id AND likes.type = 'comment' AND likes.user_id = 0) as is_liked
+            FROM comments
             JOIN users ON users.id = comments.user_id
-            WHERE comments.id = :id");
+            WHERE comments.id = :id
+        ");
         $stmt->execute(['id' => $id]);
-
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if (!$row) return null;
 
         return $this->toModel($row);
@@ -69,6 +73,7 @@ class CommentRepository {
             $row['created_at'],
             $row['username'],
             $row['like_count'],
+            $row['is_liked'],
         );
     }
 }

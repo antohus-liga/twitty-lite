@@ -12,16 +12,16 @@ class PostService {
         $this->postRepository = $postRepository;
     }
 
-    public function getAll(): array {
-        return $this->postRepository->getAll();
+    public function getAll(int $userId): array {
+        return $this->postRepository->getAll($userId);
     }
 
-    public function getByUserId(int $userId): array {
-        return $this->postRepository->getByUserId($userId);
+    public function getByUserId(int $userId, int $currentUserId): array {
+        return $this->postRepository->getByUserId($userId, $currentUserId);
     }
 
-    public function getById(int $id): ?Post {
-        return $this->postRepository->getById($id);
+    public function getById(int $id, int $userId): ?Post {
+        return $this->postRepository->getById($id, $userId);
     }
 
     public function create(int $userId, string $content): void {
