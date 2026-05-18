@@ -32,6 +32,10 @@ class AuthService {
             throw new \InvalidArgumentException('Password should be at least 8 characters long');
         }
 
+        if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+            throw new \InvalidArgumentException('Username can only contain letters, numbers and underscores');
+        }
+
         if ($this->userService->findByUsername($username)) {
             throw new \InvalidArgumentException("Username $username is taken");
         }
