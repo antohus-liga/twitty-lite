@@ -11,7 +11,7 @@ export async function dmsView(otherUsername) {
             <div id="messages">
                 ${messages.map(msg => `
                     <div class="message ${msg.senderId === currentUser.id ? 'sent' : 'received'}">
-                        <p>${msg.content}</p>
+                        <p>${msg.content.trim().replace(/\n/g, '<br>')}</p>
                         <span class="msg-time">${dayjs(msg.createdAt).fromNow()}</span>
                     </div>
                 `).join('')}
