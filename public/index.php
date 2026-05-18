@@ -12,11 +12,14 @@ require_once '../vendor/autoload.php';
 
 use App\Controllers\CommentController;
 use App\Controllers\LikeController;
+use App\Controllers\MessageController;
 use App\Controllers\UserController;
 use App\Repositories\CommentRepository;
 use App\Repositories\LikeRepository;
+use App\Repositories\MessageRepository;
 use App\Services\CommentService;
 use App\Services\LikeService;
+use App\Services\MessageService;
 use App\Services\UserService;
 use Core\Database;
 use Core\Router;
@@ -31,18 +34,21 @@ $userRepository = new UserRepository(Database::getInstance());
 $postRepository = new PostRepository(Database::getInstance());
 $likeRepository = new LikeRepository(Database::getInstance());
 $commentRepository = new CommentRepository(Database::getInstance());
+$messageRepository = new MessageRepository(Database::getInstance());
 
 $userService = new UserService($userRepository);
 $authService = new AuthService($userService);
 $postService = new PostService($postRepository);
 $likeService = new LikeService($likeRepository);
 $commentService = new CommentService($commentRepository);
+$messageService = new MessageService($messageRepository);
 
 $authController = new AuthController($authService);
 $postController = new PostController($postService);
 $likeController = new LikeController($likeService);
 $userController = new UserController($postService, $userService);
 $commentController = new CommentController($commentService);
+$messageController = new MessageController($messageService);
 
 $router = new Router();
 // Auth
@@ -71,6 +77,11 @@ $router->add('DELETE', '/api/comments/{id}', [$commentController, 'remove'], tru
 // User Profiles
 $router->add('GET', '/api/users/{username}', [$userController, 'show']);
 $router->add('PUT', '/api/users/profile', [$userController, 'updateProfile'], true);
+
+// DMs
+$router->add('GET', '/api/dms', [$messageController, 'conversations'], true);
+$router->add('GET', '/api/dms/{id}', [$messageController, 'messages'], true);
+$router->add('POST', '/api/dms/{id}', [$messageController, 'store'], true);
 
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
