@@ -37,4 +37,7 @@ export async function dmsView(otherUsername) {
         }
         await dmsView(otherUsername);
     });
+
+    const messagesDiv = document.getElementById('messages');
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
