@@ -8,11 +8,11 @@ export async function loginView() {
     document.getElementById('app').innerHTML = `
         <div class="auth-container">
             <h1>Twitty Lite</h1>
-            <input type="text" id="username" placeholder="Username" />
-            <input type="password" id="password" placeholder="Password" />
+            <input type="text" id="username" placeholder="Nome de utilizador" />
+            <input type="password" id="password" placeholder="Palavra-passe" />
             <p id="error-msg" class="error"></p>
             <button id="login-btn">Login</button>
-            <p>Don't have an account? <a href="/register" id="register-link">Register</a></p>
+            <p>Não tens conta? <a href="/register" id="register-link">Regista-te</a></p>
         </div>
     `;
 

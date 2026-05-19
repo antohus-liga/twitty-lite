@@ -11,8 +11,8 @@ export async function postView(postId) {
         <div id="post-info">
             ${postTemplate(post)}
             <div id="create-comment">
-                <textarea id="comment-content" placeholder="What do you think about this?"></textarea>
-                <button id="submit-comment-btn">Comment</button>
+                <textarea id="comment-content" placeholder="O que achas disto?"></textarea>
+                <button id="submit-comment-btn">Comentar</button>
             </div>
             <p id="error-msg" class="error"></p>
             <div id="comments">
@@ -59,7 +59,7 @@ export async function postView(postId) {
             textarea.classList.add('edit-textarea');
 
             const saveBtn = document.createElement('button');
-            saveBtn.textContent = 'Save';
+            saveBtn.textContent = 'Salvar';
             saveBtn.classList.add('save-comment-btn');
 
             contentP.replaceWith(textarea);

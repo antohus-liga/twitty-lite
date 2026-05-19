@@ -17,27 +17,27 @@ class AuthService {
 
     public function register(string $username, string $password): void {
         if (empty($username) || empty($password)) {
-            throw new \InvalidArgumentException('Username and password cannot be empty');
+            throw new \InvalidArgumentException('O nome de utilizador e a palavra-passe não podem estar vazios');
         }
 
         if (strlen($username) > 50) {
-            throw new \InvalidArgumentException('Username cannot exceed 50 characters');
+            throw new \InvalidArgumentException('O nome de utilizador não pode ter mais de 50 caracteres');
         }
 
-        if (strlen($username) <= 6) {
-            throw new \InvalidArgumentException('Username should be at least 6 characters long');
+        if (strlen($username) < 6) {
+            throw new \InvalidArgumentException('O nome de utilizador deve ter pelo menos 6 caracteres');
         }
 
-        if (strlen($password) <= 8) {
-            throw new \InvalidArgumentException('Password should be at least 8 characters long');
+        if (strlen($password) < 8) {
+            throw new \InvalidArgumentException('A palavra-passe deve ter pelo menos 8 caracteres');
         }
 
         if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
-            throw new \InvalidArgumentException('Username can only contain letters, numbers and underscores');
+            throw new \InvalidArgumentException('O nome de utilizador só pode conter letras, números e underscores');
         }
 
         if ($this->userService->findByUsername($username)) {
-            throw new \InvalidArgumentException("Username $username is taken");
+            throw new \InvalidArgumentException('O nome de utilizador já está em uso');
         }
 
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -46,7 +46,7 @@ class AuthService {
 
     public function login(string $username, string $password): ?User {
         if (empty($username) || empty($password)) {
-            throw new \InvalidArgumentException('Username and password cannot be empty');
+            throw new \InvalidArgumentException('O nome de utilizador e a palavra-passe não podem estar vazios');
         }
 
         $user = $this->userService->findByUsername($username);
@@ -55,7 +55,7 @@ class AuthService {
         }
 
         if (!password_verify($password, $user->password)) {
-            throw new \InvalidArgumentException('Invalid username or password');
+            throw new \InvalidArgumentException('Credenciais inválidas');
         }
 
         return $user;

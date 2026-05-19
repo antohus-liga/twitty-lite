@@ -5,11 +5,11 @@ export async function registerView() {
     document.getElementById('app').innerHTML = `
         <div class="auth-container">
             <h1>Twitty Lite</h1>
-            <input type="text" id="username" placeholder="Username" />
-            <input type="password" id="password" placeholder="Password" />
+            <input type="text" id="username" placeholder="Nome de utilizador" />
+            <input type="password" id="password" placeholder="Palavra-passe" />
             <p id="error-msg" class="error"></p>
-            <button id="register-btn">Register</button>
-            <p>Already have an account? <a href="/login" id="login-link">Login</a></p>
+            <button id="register-btn">Registar</button>
+            <p>Já tens uma conta? <a href="/login" id="login-link">Entra</a></p>
         </div>
     `;
 

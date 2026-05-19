@@ -1,6 +1,5 @@
 import { getMessages, sendMessage } from '../api/messages.js';
 import { getCurrentUser } from '../state.js';
-import { navigate } from '../navigate.js';
 
 export async function dmsView(otherUsername) {
     const messages = await getMessages(otherUsername);
@@ -17,9 +16,9 @@ export async function dmsView(otherUsername) {
                 `).join('')}
             </div>
             <div id="send-message">
-                <textarea id="message-content" placeholder="Write a message..."></textarea>
+                <textarea id="message-content" placeholder="Escreve uma mensagem..."></textarea>
                 <p id="error-msg" class="error"></p>
-                <button id="send-btn">Send</button>
+                <button id="send-btn">Enviar</button>
             </div>
         </div>
     `;

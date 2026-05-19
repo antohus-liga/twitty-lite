@@ -26,11 +26,11 @@ class PostService {
 
     public function create(int $userId, string $content): void {
         if (empty($content)) {
-            throw new \InvalidArgumentException('Content cannot be empty');
+            throw new \InvalidArgumentException('O conteúdo não pode estar vazio');
         }
 
         if (strlen($content) > 280) {
-            throw new \InvalidArgumentException('Content cannot exceed 280 characters');
+            throw new \InvalidArgumentException('O conteúdo não pode ter mais de 280 caracteres');
         }
 
         $this->postRepository->create($userId, $content);

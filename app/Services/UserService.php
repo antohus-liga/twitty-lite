@@ -28,28 +28,28 @@ class UserService {
         $dateOfBirth = empty($dateOfBirth) ? null : $dateOfBirth;
 
         if (strlen($bio) > 160) {
-            throw new \InvalidArgumentException("Bio cannot be longer than 160 characters");
+            throw new \InvalidArgumentException("A bio não pode ser maior que 160 caracteres");
         }
         if (!empty($website) && !filter_var($website, FILTER_VALIDATE_URL)) {
-            throw new \InvalidArgumentException("Invalid website URL");
+            throw new \InvalidArgumentException("URL de website inválido");
         }
         if ($dateOfBirth) {
             $dob = \DateTime::createFromFormat('Y-m-d', $dateOfBirth);
 
             // Validate format + invalid dates like 2025-02-30
             if (!$dob || $dob->format('Y-m-d') !== $dateOfBirth) {
-                throw new \InvalidArgumentException("Invalid date of birth");
+                throw new \InvalidArgumentException("Data de nascimento inválida");
             }
 
             $today = new \DateTime();
             $age = $today->diff($dob)->y;
 
             if ($dob > $today) {
-                throw new \InvalidArgumentException("Date of birth cannot be in the future");
+                throw new \InvalidArgumentException("A data de nascimento não pode ser no futuro");
             }
 
             if ($age < 13) {
-                throw new \InvalidArgumentException("User must be at least 13 years old");
+                throw new \InvalidArgumentException("O utilizador tem que ter pelo menos 13 anos");
             }
         }
 

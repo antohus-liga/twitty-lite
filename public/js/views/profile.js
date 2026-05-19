@@ -16,9 +16,9 @@ export async function profileView(username) {
     document.getElementById('app').innerHTML = `
         <div class="profile">
             <h2>@${data.user.username}</h2>
-            <p>Member since ${dayjs(data.user.createdAt).format('DD/MM/YYYY')}</p>
-            ${isOwner ? '' : `<button id="dm-btn">Send DM</button>`}
-            ${isOwner ? `<button id="edit-profile-info">Edit Info</button>` : ''}
+            <p>Membro desde ${dayjs(data.user.createdAt).format('DD/MM/YYYY')}</p>
+            ${isOwner ? '' : `<button id="dm-btn">Enviar Mensagem</button>`}
+            ${isOwner ? `<button id="edit-profile-info">Editar perfil</button>` : ''}
             <div id="profile-info">
                 <h3 class="user-info">User Info</h3>
                 ${data.user.bio ? `
@@ -26,11 +26,11 @@ export async function profileView(username) {
                     <p id="bio-content" class="info-content">${data.user.bio}</p>
                 ` : ''}
                 ${data.user.location ? `
-                    <h4 class="info-name">Location</h4>
+                    <h4 class="info-name">Localização</h4>
                     <p id="location-content" class="info-content">${data.user.location}</p>
                 ` : ''}
                 ${data.user.dateOfBirth ? `
-                    <h4 class="info-name">Date of birth</h4>
+                    <h4 class="info-name">Data de Nascimento</h4>
                     <p id="dateofbirth-content" class="info-content">${data.user.dateOfBirth}</p>
                 ` : ''}
                 ${data.user.website ? `
@@ -38,13 +38,13 @@ export async function profileView(username) {
                     <p><a id="website-content" href="${data.user.website}" class="info-content" target="_blank">${data.user.website}</a></p>
                 ` : ''}
                 ${data.user.occupation ? `
-                    <h4 class="info-name">Occupation</h4>
+                    <h4 class="info-name">Profissão</h4>
                     <p id="occupation-content" class="info-content">${data.user.occupation}</p>
                 ` : ''}
             </div>
         </div>
         <hr>
-        <h2>Posts from @${username}</h2>
+        <h2>Publicações de @${username}</h2>
         <div id="user-posts">
             ${data.posts.map(postTemplate).join('')}
         </div>
@@ -55,11 +55,11 @@ export async function profileView(username) {
             editBtn.style.display = 'none';
 
             document.getElementById('profile-info').innerHTML = `
-            <h3>Edit Info</h3>
+            <h3>Editar Perfil</h3>
             <label>Bio</label>
             <textarea id="edit-bio">${data.user.bio ?? ''}</textarea>
             
-            <label>Location</label>
+            <label>Localização</label>
             <input type="text" id="edit-location" list="countries" value="${data.user.location ?? ''}">
             <datalist id="countries">
                 <option value="Albania">
@@ -113,30 +113,30 @@ export async function profileView(username) {
                 <option value="United States">
             </datalist>
             
-            <label>Date of Birth</label>
+            <label>Data de Nascimento</label>
             <input type="date" id="edit-dob" value="${data.user.dateOfBirth ?? ''}">
             
             <label>Website</label>
             <input type="url" id="edit-website" value="${data.user.website ?? ''}">
             
-            <label>Occupation</label>
+            <label>Profissão</label>
             <select id="edit-occupation">
-                <option value="">Select...</option>
-                <option value="Student" ${data.user.occupation === 'Student' ? 'selected' : ''}>Student</option>
+                <option value="">Selecione...</option>
+                <option value="Student" ${data.user.occupation === 'Estudante' ? 'selected' : ''}>Estudante</option>
                 <option value="Developer" ${data.user.occupation === 'Developer' ? 'selected' : ''}>Developer</option>
                 <option value="Designer" ${data.user.occupation === 'Designer' ? 'selected' : ''}>Designer</option>
-                <option value="Teacher" ${data.user.occupation === 'Teacher' ? 'selected' : ''}>Teacher</option>
-                <option value="Other" ${data.user.occupation === 'Other' ? 'selected' : ''}>Other</option>
+                <option value="Teacher" ${data.user.occupation === 'Professor' ? 'selected' : ''}>Professor</option>
+                <option value="Other" ${data.user.occupation === 'Outra' ? 'selected' : ''}>Outra</option>
             </select>
             <p id="error-msg" class="error"></p>
         `;
 
             const saveBtn = document.createElement('button');
-            saveBtn.textContent = 'Save';
+            saveBtn.textContent = 'Salvar';
             saveBtn.classList.add('save-edit-btn');
 
             const cancelBtn = document.createElement('button');
-            cancelBtn.textContent = 'Cancel';
+            cancelBtn.textContent = 'Cancelar';
             cancelBtn.classList.add('cancel-edit-btn');
 
             editBtn.after(saveBtn);

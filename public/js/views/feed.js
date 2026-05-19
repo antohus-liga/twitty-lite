@@ -5,8 +5,8 @@ export async function feedView() {
     const posts = await getPosts();
     document.getElementById('app').innerHTML = `
         <div id="create-post">
-            <textarea id="post-content" placeholder="What's on your mind?"></textarea>
-            <button id="post-btn">Post</button>
+            <textarea id="post-content" placeholder="O que estás a pensar?"></textarea>
+            <button id="post-btn">Publicar</button>
         </div>
         <p id="error-msg" class="error"></p>
         <div id="feed">

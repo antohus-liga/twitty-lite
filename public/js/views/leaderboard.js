@@ -6,12 +6,12 @@ export async function leaderboardView() {
     document.getElementById('app').innerHTML = `
         <table>
             <tr>
-                <th>Rank</th>
-                <th>User</th>
-                <th>Total post likes received</th>
-                <th>Total comment likes received</th>
-                <th>Total posts made</th>
-                <th>Total comments made</th>
+                <th>Classificação</th>
+                <th>Utilizador</th>
+                <th>Likes nas publicações</th>
+                <th>Likes nos comentários</th>
+                <th>Publicações</th>
+                <th>Comentários</th>
             </tr>
             ${leaderboard.map((userStats, index) => `
             <tr>

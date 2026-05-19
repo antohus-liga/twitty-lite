@@ -12,8 +12,8 @@ export function commentTemplate(comment) {
             <div class="actions">
                 <button class="like-comment-btn ${comment.isLiked ? 'liked' : ''}" data-id="${comment.id}">❤️ ${comment.likeCount}</button>
                 ${isOwner ? `
-                    <button class="edit-comment-btn" data-id="${comment.id}">Edit</button>
-                    <button class="delete-comment-btn" data-id="${comment.id}">Delete</button>
+                    <button class="edit-comment-btn" data-id="${comment.id}">Editar</button>
+                    <button class="delete-comment-btn" data-id="${comment.id}">Eliminar</button>
                 ` : ''}
             </div>
         </div>

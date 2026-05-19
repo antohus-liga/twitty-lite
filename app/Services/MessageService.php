@@ -21,10 +21,10 @@ class MessageService {
 
     public function create(int $senderId, int $receiverId, string $content): void {
         if (empty($content)) {
-            throw new \InvalidArgumentException("Content cannot be empty");
+            throw new \InvalidArgumentException('A mensagem não pode estar vazia');
         }
         if (strlen($content) > 200) {
-            throw new \InvalidArgumentException("Content cannot be longer than 200 characters");
+            throw new \InvalidArgumentException('A mensagem não pode ter mais de 200 caracteres');
         }
         if ($senderId === $receiverId) {
             throw new \InvalidArgumentException("You can't send messages to yourself");
