@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\UserStats;
 use PDO;
 use App\Models\User;
 
@@ -72,5 +73,35 @@ class UserRepository {
             'occupation' => $occupation,
             'id' => $id,
         ]);
+    }
+
+    public function getLeaderboard(): array {
+        $stmt = $this->db->prepare("
+            SELECT
+                users.username,
+                COUNT(DISTINCT posts.id) AS total_posts,
+                COUNT(DISTINCT comments.id) AS total_comments,
+                COALESCE((SELECT COUNT(*) FROM likes 
+                          JOIN posts p ON likes.target_id = p.id 
+                          WHERE p.user_id = users.id AND likes.type = 'post'), 0) AS post_likes,
+                COALESCE((SELECT COUNT(*) FROM likes 
+                          JOIN comments c ON likes.target_id = c.id 
+                          WHERE c.user_id = users.id AND likes.type = 'comment'), 0) AS comment_likes
+            FROM users
+            LEFT JOIN posts ON users.id = posts.user_id
+            LEFT JOIN comments ON users.id = comments.user_id
+            GROUP BY users.id, users.username
+            ORDER BY (post_likes * 2 + comment_likes + total_posts + total_comments) DESC
+        ");
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map(fn ($row) => new UserStats(
+            $row['username'],
+            (int) $row['post_likes'],
+            (int) $row['comment_likes'],
+            (int) $row['total_posts'],
+            (int) $row['total_comments'],
+        ), $rows);
     }
 }

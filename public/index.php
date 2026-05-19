@@ -83,6 +83,9 @@ $router->add('GET', '/api/dms', [$messageController, 'conversations'], true);
 $router->add('GET', '/api/dms/{username}', [$messageController, 'messages'], true);
 $router->add('POST', '/api/dms/{username}', [$messageController, 'store'], true);
 
+// Leaderboard
+$router->add('GET', '/api/leaderboard', [$userController, 'leaderboard']);
+
 $method = $_SERVER['REQUEST_METHOD'];
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 

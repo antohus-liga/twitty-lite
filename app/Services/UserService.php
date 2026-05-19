@@ -34,4 +34,8 @@ class UserService {
 
         $this->userRepository->updateProfile($id, $bio, $dateOfBirth, $location, $website, $occupation);
     }
+
+    public function getLeaderboard(): array {
+        return $this->userRepository->getLeaderboard();
+    }
 }

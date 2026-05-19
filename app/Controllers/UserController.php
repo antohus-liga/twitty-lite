@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Post;
+use App\Models\UserStats;
 use App\Services\PostService;
 use App\Services\UserService;
 
@@ -70,5 +71,19 @@ class UserController {
 
         http_response_code(200);
         echo json_encode(['message' => 'Profile updated']);
+    }
+
+    public function leaderboard(): void {
+        $leaderboard = $this->userService->getLeaderboard();
+        http_response_code(200);
+        echo json_encode(
+            array_map(fn(UserStats $stats) => [
+                'username' => htmlspecialchars($stats->username),
+                'totalPostLikes' => $stats->totalPostLikes,
+                'totalCommentLikes' => $stats->totalCommentLikes,
+                'totalPosts' => $stats->totalPosts,
+                'totalComments' => $stats->totalComments,
+            ], $leaderboard)
+        );
     }
 }
