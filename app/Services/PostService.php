@@ -37,7 +37,7 @@ class PostService {
     }
 
     public function remove(int $postId, int $userId): void {
-        $post = $this->postRepository->getById($postId);
+        $post = $this->postRepository->getById($postId, $userId);
         if (!$post) {
             throw new \InvalidArgumentException('Post not found');
         }
@@ -48,7 +48,7 @@ class PostService {
     }
 
     public function update(int $postId, int $userId, string $content): void {
-        $post = $this->postRepository->getById($postId);
+        $post = $this->postRepository->getById($postId, $userId);
         if (!$post) {
             throw new \InvalidArgumentException('Post not found');
         }
