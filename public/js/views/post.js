@@ -97,7 +97,12 @@ export async function postView(postId) {
             saveBtn.addEventListener('click', async () => {
                 const newContent = textarea.value;
                 const result = await editComment(commentId, newContent);
-                if (result.error) return;
+
+                if (result.error) {
+                    document.getElementById('error-msg').textContent = result.error;
+                    return;
+                }
+
                 reEnableEditBtns();
                 await postView(postId);
             });
