@@ -44,6 +44,10 @@ class UserService {
             $today = new \DateTime();
             $age = $today->diff($dob)->y;
 
+            if ($dob > $today) {
+                throw new \InvalidArgumentException("Date of birth cannot be in the future");
+            }
+
             if ($age < 13) {
                 throw new \InvalidArgumentException("User must be at least 13 years old");
             }
