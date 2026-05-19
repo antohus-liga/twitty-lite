@@ -7,6 +7,9 @@ import {commentTemplate} from "../components/comment.js";
 export async function postView(postId) {
     const post = await getPost(postId);
     const comments = await getComments(postId);
+
+    document.title = `Twitty Lite - Publicação de @${post.username}`;
+
     document.getElementById('app').innerHTML = `
         <div id="post-info">
             ${postTemplate(post)}

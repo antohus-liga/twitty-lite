@@ -8,6 +8,8 @@ export async function profileView(username) {
     const user = getCurrentUser();
     const isOwner = user.username === username;
 
+    document.title = `Twitty Lite - @${data.user.username}`;
+
     if (data.error) {
         document.getElementById('app').innerHTML = '<p>User not found</p>';
         return;

@@ -21,11 +21,22 @@ const routes = [
     { path: /^\/leaderboard$/, view: leaderboardView },
 ];
 
+const titles = {
+    '/': 'Twitty Lite - Entrar',
+    '/login': 'Twitty Lite - Entrar',
+    '/register': 'Twitty Lite - Registar',
+    '/feed': 'Twitty Lite - Feed',
+    '/dms': 'Twitty Lite - Mensagens',
+    '/leaderboard': 'Twitty Lite - Ranking',
+};
+
 const publicRoutes = ['/login', '/register', '/'];
 
 export async function render() {
     const path = window.location.pathname;
     const isPublic = publicRoutes.includes(path);
+
+    document.title = titles[path] || 'Twitty Lite';
 
     if (!isPublic) {
         const user = getCurrentUser();

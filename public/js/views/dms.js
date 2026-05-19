@@ -5,6 +5,8 @@ export async function dmsView(otherUsername) {
     const messages = await getMessages(otherUsername);
     const currentUser = getCurrentUser();
 
+    document.title = `Twitty Lite - Mensagens com @${otherUsername}`;
+
     document.getElementById('app').innerHTML = `
         <div id="chat">
             <div id="messages">
