@@ -24,8 +24,6 @@ class UserController {
             return;
         }
 
-
-
         $posts = $this->postService->getByUserId($user->id, $_SESSION['user_id']);
 
         http_response_code(200);

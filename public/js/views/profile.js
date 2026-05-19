@@ -128,6 +128,7 @@ export async function profileView(username) {
                 <option value="Teacher" ${data.user.occupation === 'Teacher' ? 'selected' : ''}>Teacher</option>
                 <option value="Other" ${data.user.occupation === 'Other' ? 'selected' : ''}>Other</option>
             </select>
+            <p id="error-msg" class="error"></p>
         `;
 
             const saveBtn = document.createElement('button');
@@ -149,7 +150,12 @@ export async function profileView(username) {
                 const occupation = document.getElementById('edit-occupation').value;
 
                 const result = await updateProfile(bio, location, dob, website, occupation);
-                if (result.error) return;
+
+                if (result.error) {
+                    document.getElementById('error-msg').textContent = result.error;
+                    return;
+                }
+
                 await profileView(username);
             });
 
