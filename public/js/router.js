@@ -3,11 +3,11 @@ import {registerView} from "./views/register.js";
 import {feedView} from "./views/feed.js";
 import {renderNavbar, setupNavbar} from "./components/navbar.js";
 import {profileView} from "./views/profile.js";
-import {me} from "./api/auth.js";
 import {postView} from "./views/post.js";
 import {getCurrentUser} from "./state.js";
 import {dmsListView} from "./views/dmsList.js";
 import {dmsView} from "./views/dms.js";
+import {leaderboardView} from "./views/leaderboard.js";
 
 const routes = [
     { path: /^\/$/, view: loginView },
@@ -18,6 +18,7 @@ const routes = [
     { path: /^\/post\/(\w+)$/, view: postView },
     { path: /^\/dms$/, view: dmsListView },
     { path: /^\/dms\/(\w+)$/, view: dmsView },
+    { path: /^\/leaderboard$/, view: leaderboardView },
 ];
 
 const publicRoutes = ['/login', '/register', '/'];

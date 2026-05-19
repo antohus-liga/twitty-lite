@@ -10,6 +10,7 @@ export function renderNavbar(username) {
                 <a href="/feed" class="nav-link">Feed</a>
                 <a href="/profile/${username}" class="nav-link">Profile</a>
                 <a href="/dms" class="nav-link">DMs</a>
+                <a href="/leaderboard" class="nav-link">Leaderboard</a>
                 <button id="logout-btn">Logout</button>
             </div>
         </nav>
