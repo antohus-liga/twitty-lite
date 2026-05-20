@@ -48,7 +48,7 @@ export async function profileView(username) {
         <hr>
         <h2>Publicações de @${username}</h2>
         <div id="user-posts">
-            ${data.posts.map(postTemplate).join('')}
+            ${data.posts.map(post => postTemplate(post)).join('')}
         </div>
     `;
     if (isOwner) {

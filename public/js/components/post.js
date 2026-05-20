@@ -2,9 +2,9 @@ import {deletePost, editPost, likePost} from "../api/posts.js";
 import {navigate} from "../navigate.js";
 import {getCurrentUser} from "../state.js";
 
-export function postTemplate(post) {
+export function postTemplate(post, isSingle = false) {
     const currentUser = getCurrentUser();
-    const isOwner = currentUser && currentUser.username === post.username;
+    const isOwner = currentUser && currentUser.username === post.username && !isSingle;
 
     return `
         <div class="post" data-id="${post.id}">

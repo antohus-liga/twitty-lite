@@ -12,7 +12,7 @@ export async function postView(postId) {
 
     document.getElementById('app').innerHTML = `
         <div id="post-info">
-            ${postTemplate(post)}
+            ${postTemplate(post, true)}
             <div id="create-comment">
                 <textarea id="comment-content" placeholder="O que achas disto?"></textarea>
                 <button id="submit-comment-btn">Comentar</button>

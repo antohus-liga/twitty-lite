@@ -10,7 +10,7 @@ export async function feedView() {
         </div>
         <p id="error-msg" class="error"></p>
         <div id="feed">
-            ${posts.map(postTemplate).join('')}
+            ${posts.map(post => postTemplate(post)).join('')}
         </div>
     `;
     setupPostListeners('feed', () => feedView());
