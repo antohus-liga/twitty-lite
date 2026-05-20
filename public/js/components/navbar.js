@@ -8,9 +8,9 @@ export function renderNavbar(username) {
             <a href="/feed" class="nav-logo">Twitty Lite</a>
             <div>
                 <a href="/feed" class="nav-link">Feed</a>
-                <a href="/profile/${username}" class="nav-link">Perfil</a>
                 <a href="/dms" class="nav-link">Mensagens</a>
                 <a href="/leaderboard" class="nav-link">Ranking</a>
+                <a href="/profile/${username}" class="nav-link"><strong>${username}</strong></a>
                 <button id="logout-btn">Sair</button>
             </div>
         </nav>
