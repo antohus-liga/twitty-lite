@@ -16,7 +16,7 @@ export async function leaderboardView() {
             ${leaderboard.map((userStats, index) => `
             <tr>
                 <td>${index + 1}</td>
-                <td>${userStats.username}</td>
+                <td><a href="/profile/${userStats.username}" class="leaderboard-username">${userStats.username}</a></td>
                 <td>${userStats.totalPostLikes}</td>
                 <td>${userStats.totalCommentLikes}</td>
                 <td>${userStats.totalPosts}</td>
