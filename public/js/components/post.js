@@ -15,8 +15,8 @@ export function postTemplate(post) {
                 <button class="like-btn ${post.isLiked ? 'liked' : ''}" data-id="${post.id}">❤️ ${post.likeCount}</button>
                 <button class="comment-btn" data-id="${post.id}">💬 ${post.commentCount}</button>
                 ${isOwner ? `
-                    <button class="edit-post-btn" data-id="${post.id}">Edit</button>
-                    <button class="delete-post-btn" data-id="${post.id}">Delete</button>
+                    <button class="edit-post-btn" data-id="${post.id}">Editar</button>
+                    <button class="delete-post-btn" data-id="${post.id}">Eliminar</button>
                 ` : ''}
             </div>
         </div>
