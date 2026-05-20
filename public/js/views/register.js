@@ -1,5 +1,6 @@
-import {register} from "../api/auth.js";
+import {login, register} from "../api/auth.js";
 import {navigate} from "../navigate.js";
+import {setCurrentUser} from "../state.js";
 
 export async function registerView() {
     document.getElementById('app').innerHTML = `
@@ -23,7 +24,11 @@ export async function registerView() {
             return;
         }
 
-        navigate('/login');
+        const loginResult = await login(username, password);
+        if (loginResult.id) {
+            setCurrentUser(loginResult);
+        }
+        navigate('/feed');
     });
 
     document.getElementById('login-link').addEventListener('click', (e) => {
