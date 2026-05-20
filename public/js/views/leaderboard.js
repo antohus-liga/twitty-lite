@@ -1,4 +1,5 @@
 import {getLeaderboard} from "../api/leaderboard.js";
+import {navigate} from "../navigate.js";
 
 export async function leaderboardView() {
     const leaderboard = await getLeaderboard();
@@ -25,4 +26,11 @@ export async function leaderboardView() {
             `).join('')}
         </table>
     `;
+
+    document.querySelector('table').addEventListener('click', (e) => {
+        if (e.target.classList.contains('leaderboard-username')) {
+            e.preventDefault();
+            navigate(`/profile/${e.target.textContent}`);
+        }
+    });
 }
