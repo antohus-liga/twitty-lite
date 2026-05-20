@@ -15,7 +15,7 @@ const routes = [
     { path: /^\/register$/, view: registerView },
     { path: /^\/feed$/, view: feedView },
     { path: /^\/profile\/(\w+)$/, view: profileView },
-    { path: /^\/post\/(\w+)$/, view: postView },
+    { path: /^\/post\/([\w-]+)$/, view: postView },
     { path: /^\/dms$/, view: dmsListView },
     { path: /^\/dms\/(\w+)$/, view: dmsView },
     { path: /^\/leaderboard$/, view: leaderboardView },

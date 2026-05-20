@@ -12,7 +12,7 @@ class CommentRepository {
         $this->db = $db;
     }
 
-    public function findByPostId(int $postId, int $currentUserId): array {
+    public function findByPostId(string $postId, int $currentUserId): array {
         $stmt = $this->db->prepare("
             SELECT comments.*, 
                    users.username,
@@ -49,7 +49,7 @@ class CommentRepository {
         return $this->toModel($row);
     }
 
-    public function create(int $userId, int $postId, string $content): void {
+    public function create(int $userId, string $postId, string $content): void {
         $stmt = $this->db->prepare("INSERT INTO comments (user_id, post_id, content) VALUES (:user_id, :post_id, :content)");
         $stmt->execute(['user_id' => $userId, 'post_id' => $postId, 'content' => $content]);
     }

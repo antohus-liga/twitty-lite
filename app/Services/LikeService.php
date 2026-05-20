@@ -11,7 +11,7 @@ class LikeService {
         $this->likeRepository = $likeRepository;
     }
 
-    public function toggleLike(int $userId, int $targetId, string $type): bool {
+    public function toggleLike(int $userId, string $targetId, string $type): bool {
         $like = $this->likeRepository->findLike($userId, $targetId, $type);
         if ($like) {
             $this->likeRepository->remove($like->userId, $like->targetId, $like->type);

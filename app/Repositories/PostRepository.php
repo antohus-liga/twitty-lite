@@ -50,7 +50,7 @@ class PostRepository {
         return array_map(fn($row) => $this->toModel($row), $rows);
     }
 
-    public function getById(int $id, int $userId): ?Post {
+    public function getById(string $id, int $userId): ?Post {
         $stmt = $this->db->prepare("
             SELECT posts.*, 
                    users.username,
@@ -69,18 +69,26 @@ class PostRepository {
     }
 
     public function create(int $userId, string $content): void {
-        $stmt = $this->db->prepare(
-            "INSERT INTO posts(user_id, content) VALUES (:user_id, :content)"
+        $uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
-        $stmt->execute([':user_id' => $userId, ':content' => $content]);
+
+        $stmt = $this->db->prepare(
+            "INSERT INTO posts(id, user_id, content) VALUES (:id, :user_id, :content)"
+        );
+        $stmt->execute(['id' => $uuid, ':user_id' => $userId, ':content' => $content]);
     }
 
-    public function remove(int $id): void {
+    public function remove(string $id): void {
         $stmt = $this->db->prepare("DELETE FROM posts WHERE id = :id");
         $stmt->execute(['id' => $id]);
     }
 
-    public function update(int $id, string $content): void {
+    public function update(string $id, string $content): void {
         $stmt = $this->db->prepare("UPDATE posts SET content = :content WHERE id = :id");
         $stmt->execute(['content' => $content, 'id' => $id]);
     }

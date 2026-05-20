@@ -45,7 +45,7 @@ class PostController {
         echo json_encode(['message' => 'Post created']);
     }
 
-    public function show(int $id): void {
+    public function show(string $id): void {
         $post = $this->postService->getById($id, $_SESSION['user_id']);
         if (!$post) {
             http_response_code(404);
@@ -67,7 +67,7 @@ class PostController {
         ]);
     }
 
-    public function remove(int $id): void {
+    public function remove(string $id): void {
         try {
             $this->postService->remove($id, $_SESSION['user_id']);
         } catch (\InvalidArgumentException $e) {
@@ -80,7 +80,7 @@ class PostController {
         echo json_encode(['message' => 'Post removed']);
     }
 
-    public function update(int $id): void {
+    public function update(string $id): void {
         $data = json_decode(file_get_contents("php://input"), true);
 
         try {

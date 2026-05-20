@@ -11,11 +11,11 @@ class CommentService {
         $this->commentRepository = $commentRepository;
     }
 
-    public function getCommentsByPostId(int $postId, int $currentUserId): array {
+    public function getCommentsByPostId(string $postId, int $currentUserId): array {
         return $this->commentRepository->findByPostId($postId, $currentUserId);
     }
 
-    public function create(int $userId, int $postId, string $content): void {
+    public function create(int $userId, string $postId, string $content): void {
         if (empty($content)) {
             throw new \InvalidArgumentException('O comentário não pode estar vazio');
         }

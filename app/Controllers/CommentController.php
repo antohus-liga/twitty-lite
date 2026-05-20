@@ -13,7 +13,7 @@ class CommentController {
         $this->commentService = $commentService;
     }
 
-    public function index(int $postId): void {
+    public function index(string $postId): void {
         $comments = $this->commentService->getCommentsByPostId($postId, $_SESSION['user_id']);
 
         header('Content-Type: application/json');
@@ -30,7 +30,7 @@ class CommentController {
         ], $comments));
     }
 
-    public function store(int $postId): void {
+    public function store(string $postId): void {
         $data = json_decode(file_get_contents('php://input'), true);
         $content = $data['content'];
 

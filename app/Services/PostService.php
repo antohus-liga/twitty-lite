@@ -20,7 +20,7 @@ class PostService {
         return $this->postRepository->getByUserId($userId, $currentUserId);
     }
 
-    public function getById(int $id, int $userId): ?Post {
+    public function getById(string $id, int $userId): ?Post {
         return $this->postRepository->getById($id, $userId);
     }
 
@@ -36,7 +36,7 @@ class PostService {
         $this->postRepository->create($userId, $content);
     }
 
-    public function remove(int $postId, int $userId): void {
+    public function remove(string $postId, int $userId): void {
         $post = $this->postRepository->getById($postId, $userId);
         if (!$post) {
             throw new \InvalidArgumentException('Post not found');
@@ -47,7 +47,7 @@ class PostService {
         $this->postRepository->remove($postId);
     }
 
-    public function update(int $postId, int $userId, string $content): void {
+    public function update(string $postId, int $userId, string $content): void {
         $post = $this->postRepository->getById($postId, $userId);
         if (!$post) {
             throw new \InvalidArgumentException('Post not found');

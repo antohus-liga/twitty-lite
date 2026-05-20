@@ -18,7 +18,7 @@ class Router {
         foreach ($this->routes as $route) {
             $pattern = '#^' . preg_replace(
                     ['/\{id}/', '/\{(\w+)}/'],
-                    ['(\d+)', '([\w]+)'],
+                    ['([\w-]+)', '([\w]+)'],
                     $route['path']
                 ) . '$#';
 
