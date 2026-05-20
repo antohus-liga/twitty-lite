@@ -61,7 +61,7 @@ export function setupPostListeners(containerId, onUpdate) {
             textarea.classList.add('edit-textarea');
 
             const saveBtn = document.createElement('button');
-            saveBtn.textContent = 'Save';
+            saveBtn.textContent = 'Salvar';
             saveBtn.classList.add('save-post-btn');
 
             contentP.replaceWith(textarea);

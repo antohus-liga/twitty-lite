@@ -124,11 +124,11 @@ export async function profileView(username) {
             <label>Profissão</label>
             <select id="edit-occupation">
                 <option value="">Selecione...</option>
-                <option value="Student" ${data.user.occupation === 'Estudante' ? 'selected' : ''}>Estudante</option>
-                <option value="Developer" ${data.user.occupation === 'Developer' ? 'selected' : ''}>Developer</option>
+                <option value="Estudante" ${data.user.occupation === 'Estudante' ? 'selected' : ''}>Estudante</option>
+                <option value="Desenvolvedor" ${data.user.occupation === 'Desenvolvedor' ? 'selected' : ''}>Desenvolvedor</option>
                 <option value="Designer" ${data.user.occupation === 'Designer' ? 'selected' : ''}>Designer</option>
-                <option value="Teacher" ${data.user.occupation === 'Professor' ? 'selected' : ''}>Professor</option>
-                <option value="Other" ${data.user.occupation === 'Outra' ? 'selected' : ''}>Outra</option>
+                <option value="Professor" ${data.user.occupation === 'Professor' ? 'selected' : ''}>Professor</option>
+                <option value="Outra" ${data.user.occupation === 'Outra' ? 'selected' : ''}>Outra</option>
             </select>
             <p id="error-msg" class="error"></p>
         `;
